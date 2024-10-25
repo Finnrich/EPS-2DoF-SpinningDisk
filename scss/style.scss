@@ -6,10 +6,15 @@
     padding: 0;
 }
 
+html {
+    color: var(--clr-font);
+    font-family: 'Inter';
+}
+
 .hidden {
     display: none;
 }
 
 body {
-    background-color: var(--lmAlmostwhite);
+    background-color: var(--clr-sidebars);
 }

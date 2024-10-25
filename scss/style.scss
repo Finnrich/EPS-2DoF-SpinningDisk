@@ -1,4 +1,5 @@
 @use "partial/variables.scss";
+@use "partial/basicLayouts.scss";
 
 * {
     margin: 0;
@@ -7,4 +8,8 @@
 
 .hidden {
     display: none;
+}
+
+body {
+    background-color: var(--lmAlmostwhite);
 }

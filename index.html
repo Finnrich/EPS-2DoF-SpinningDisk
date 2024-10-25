@@ -8,30 +8,37 @@
     <title>BTSD - Overview</title>
 </head>
 <body>
-    <header></header>
-    <div id="information">
-        <div id="info-left" class="info-section">
-            <div id="run-btn">
-                <button id="start">Start</button>
-                <button id="stop" class="hidden">Stop</button>
-            </div>
-            <div id="connection">
-                <button id="connect">Connect to a device</button>
-                <div id="disconnect-cont" class="hidden">
-                    <button id="disconnect">Disconnect</button>
-                    <span id="device-id">163982</span>
+    <div id="narrow">
+        <div id="bg">
+            <header>
+                <h1>2DoF Spinning Disk</h1>
+                <div id="ld-modes"></div>
+            </header>
+            <div id="information">
+                <div id="info-left" class="info-section">
+                    <div id="run-btn">
+                        <button id="start">Start</button>
+                        <button id="stop" class="hidden">Stop</button>
+                    </div>
+                    <div id="connection">
+                        <button id="connect">Connect to a device</button>
+                        <div id="disconnect-cont" class="hidden">
+                            <button id="disconnect">Disconnect</button>
+                            <span id="device-id">163982</span>
+                        </div>
+                    </div>
+                    <div id="diskcode" class="box">
+                        <h3>Diskcode</h3>
+                    </div>
+                    <div id="sensor-data" class="box">
+                        <h3>Sensor Data</h3>
+                    </div>
                 </div>
+                <div id="info-center" class="info-section"></div>
+                <div id="info-right" class="info-section"></div>
             </div>
-            <div id="mapcode" class="box">
-                <h3>Mapcode</h3>
-            </div>
-            <div id="sensor-data" class="box">
-                <h3>Sensor Data</h3>
-            </div>
+            <footer></footer>
         </div>
-        <div id="info-center" class="info-section"></div>
-        <div id="info-right" class="info-section"></div>
     </div>
-    <footer></footer>
 </body>
 </html>

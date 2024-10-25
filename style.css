@@ -1,0 +1,27 @@
+:root {
+    --lmAlmostblack: #1D201B;
+    --lmAlmostwhite: #FBFBFB;
+    --lmBG: #FFFFFF;
+    --lmBrightGrey: #F2F2F2;
+    --lmDarkGrey: #7E7E7E;
+    --lmMidGrey: #D7D7D7;
+    --lmOptimalPath: #1C8DE9;
+    --lmYourpath: #EB09F3;
+    --dmAlmostBlack: #1F1F1F;
+    --dmAlmostwhite: #F5F5F5;
+    --dmBG: #323232;
+    --dmBrightGrey: #EAEAEA;
+    --dmDarkGrey: #424242;
+    --dmMidGrey: #5F5F5F;
+    --dmOptimalPath: var(--lmOptimalPath);
+    --dmYourpath: #EB09F3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+
+}

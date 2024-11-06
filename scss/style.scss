@@ -1,5 +1,6 @@
 @use "partial/variables.scss";
 @use "partial/basicLayouts.scss";
+@use "partial/singleElements.scss";
 
 * {
     margin: 0;
@@ -10,6 +11,12 @@
 html {
     color: var(--clr-font);
     font-family: 'Inter';
+
+    &[done=true] * {
+        transition: background-color 200ms ease-in-out,
+                    color 200ms ease-in-out,
+                    fill 200ms ease-in-out;
+    }
 }
 
 .hidden {

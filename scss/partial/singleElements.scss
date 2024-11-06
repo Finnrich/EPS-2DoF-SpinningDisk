@@ -1,0 +1,49 @@
+
+#range-linear-motor {
+    &::-moz-range-thumb, ::-webkit-slider-thumb {
+        background-color: var(--clr-yourPath);
+    }
+}
+
+#ld-modes {
+
+    background-color: var(--clr-button);
+    width: max-content;
+    padding: 3px;
+    border-radius: 6px;
+    position: relative;
+
+    & > #ld-modes-btn-cont {
+        display: flex;
+        gap: 3px;
+        position: relative;
+        z-index: 1;
+
+        & > button {
+            background-color: transparent;
+
+            &:active {
+                filter: unset;
+            }
+        }
+    }
+
+    & > #ld-modes-selection {
+        background-color: var(--clr-box);
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 3px;
+        border-radius: 4px;
+        z-index: 0;
+        transition: left 200ms ease-in-out;
+
+        &[mode=light] {
+            left: 3px;
+        }
+
+        &[mode=dark] {
+            left: 38px;
+        }
+    }
+}

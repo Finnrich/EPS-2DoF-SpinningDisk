@@ -1,7 +1,6 @@
 
 h1 {
     font-size: 42px;
-    margin-top: 42px;
 }
 
 h3 {
@@ -54,19 +53,6 @@ h3 {
         width: 350px;
     }
 
-    & > .box {
-        background-color: var(--clr-box);
-        border-radius: 12px;
-        padding: 16px;
-        display: flex;
-        flex-direction: column;
-        row-gap: 12px;
-
-        & button {
-            width: 100%;
-        }
-    }
-
     & > .center {
         display: flex;
         flex-direction: column;
@@ -74,7 +60,25 @@ h3 {
     }
 }
 
-input {
+.box {
+    background-color: var(--clr-box);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+
+    & button {
+        width: 100%;
+    }
+}
+
+label {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+input[type=text] {
     background: none;
     color: var(--clr-font);
     border: 2px solid var(--clr-font-secondary);
@@ -89,6 +93,29 @@ input {
         opacity: 1;
         font-weight: normal;
     }
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--clr-button);
+    height: 8px;
+    border-radius: 2px;
+
+    &::-moz-range-thumb, ::-webkit-slider-thumb {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: none;
+        background-color: var(--clr-font-secondary);
+    }
+}
+
+.inputs-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 4px 0 12px 0;
 }
 
 button {
@@ -140,6 +167,13 @@ button.disabled {
         width: 18px;
         fill: var(--clr-font);
     }
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 42px;
 }
 
 footer {

@@ -96,13 +96,22 @@ input[type=text] {
 }
 
 input[type=range] {
-    -webkit-appearance: none;
     appearance: none;
     background-color: light-dark(var(--lmButton), var(--dmButton));
     height: 8px;
     border-radius: 2px;
 
-    &::-moz-range-thumb, ::-webkit-slider-thumb {
+    &::-moz-range-thumb  {
+        appearance: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: none;
+        background-color: light-dark(var(--lmFontSecondary), var(--dmFontSecondary));
+    }
+
+    &::-webkit-slider-thumb  {
+        appearance: none;
         width: 28px;
         height: 28px;
         border-radius: 50%;

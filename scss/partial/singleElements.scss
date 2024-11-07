@@ -1,6 +1,9 @@
 
 #range-linear-motor {
-    &::-moz-range-thumb, ::-webkit-slider-thumb {
+    &::-moz-range-thumb {
+        background-color: var(--clr-yourPath);
+    }
+    &::-webkit-slider-thumb {
         background-color: var(--clr-yourPath);
     }
 }

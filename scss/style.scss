@@ -12,11 +12,11 @@ html {
     color: light-dark(var(--lmFont), var(--dmFont));
     font-family: 'Inter';
 
-    &[done=true] * {
-        -moz-transition: background-color 200ms ease-in-out,
-        color 200ms ease-in-out,
-        fill 200ms ease-in-out;
-    }
+    // &[done=true] * {
+    //     transition: background-color 200ms ease-in-out,
+    //     color 200ms ease-in-out,
+    //     fill 200ms ease-in-out;
+    // }
 }
 
 .hidden {

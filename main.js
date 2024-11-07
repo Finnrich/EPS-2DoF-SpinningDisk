@@ -1,9 +1,9 @@
 
 
-// changeLDMode(getCookie("ldMode") == "0" ? false : true); // check+set light/dark mode from cookies
-// setTimeout(() => { // prevent onreload flashing to default light mode
-//     document.querySelector('html').setAttribute('done', 'true');
-// }, 50);
+changeLDMode(getCookie("ldMode") == "0" ? false : true); // check+set light/dark mode from cookies
+setTimeout(() => { // prevent onreload flashing to default light mode
+    document.querySelector('html').setAttribute('done', 'true');
+}, 50);
 
 // change light/dark mode (onclick)
 function changeLDMode(isLightmode) { // boolean -> 1: light, 0: dark

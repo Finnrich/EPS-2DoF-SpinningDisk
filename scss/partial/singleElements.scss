@@ -7,7 +7,7 @@
 
 #ld-modes {
 
-    background-color: var(--clr-button);
+    background-color: light-dark(var(--lmButton), var(--dmButton));
     width: max-content;
     padding: 3px;
     border-radius: 6px;
@@ -29,7 +29,7 @@
     }
 
     & > #ld-modes-selection {
-        background-color: var(--clr-box);
+        background-color: light-dark(var(--lmBox), var(--dmBox));
         position: absolute;
         width: 32px;
         height: 32px;
@@ -44,6 +44,35 @@
 
         &[mode=dark] {
             left: 38px;
+        }
+    }
+}
+
+#disk-diagram {
+    align-items: center;
+
+    & > #disk-diagram-cont {
+        position: relative;
+        display: flex;
+
+        & > canvas {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            z-index: 1;
+        }
+    
+        &::after {
+            position: absolute;
+            content: "";
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background-color: light-dark(var(--lmButton), var(--dmButton));
+            border-radius: 50%;
+            z-index: 0;
         }
     }
 }

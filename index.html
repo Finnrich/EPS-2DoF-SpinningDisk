@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
+    <script src="plot.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <title>BTSD - Overview</title>
 </head>
 <body>
@@ -46,7 +47,11 @@
                         </div>
                     </div>
                     <div id="info-center" class="info-section">
-                        <div id="disk-diagram" class="box"></div>
+                        <div id="disk-diagram" class="box">
+                            <div id="disk-diagram-cont">
+                                <canvas></canvas>
+                            </div>
+                        </div>
                     </div>
                     <div id="info-right" class="info-section">
                         <div id="evaluation" class="box">

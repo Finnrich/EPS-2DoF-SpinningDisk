@@ -1,9 +1,9 @@
 
 
-changeLDMode(getCookie("ldMode") == "0" ? false : true); // check+set light/dark mode from cookies
-setTimeout(() => { // prevent onreload flashing to default light mode
-    document.querySelector('html').setAttribute('done', 'true');
-}, 50);
+// changeLDMode(getCookie("ldMode") == "0" ? false : true); // check+set light/dark mode from cookies
+// setTimeout(() => { // prevent onreload flashing to default light mode
+//     document.querySelector('html').setAttribute('done', 'true');
+// }, 50);
 
 // change light/dark mode (onclick)
 function changeLDMode(isLightmode) { // boolean -> 1: light, 0: dark
@@ -11,23 +11,13 @@ function changeLDMode(isLightmode) { // boolean -> 1: light, 0: dark
     const root = document.querySelector(':root');
     if (isLightmode) {
         if (selecEl.getAttribute('mode') != 'light') {
-            root.style.setProperty('--clr-font', 'var(--lmAlmostBlack)');
-            root.style.setProperty('--clr-sidebars', 'var(--lmAlmostWhite)');
-            root.style.setProperty('--clr-BG', 'var(--lmBG)');
-            root.style.setProperty('--clr-box', 'var(--lmBrightGrey)');
-            root.style.setProperty('--clr-button', 'var(--lmMidGrey)');
-            root.style.setProperty('--clr-font-secondary', 'var(--lmDarkGrey)');
+            root.style.setProperty("color-scheme", "light");
             selecEl.setAttribute('mode', 'light');
             setCookie("ldMode", "1");
         }
     } else {
         if (selecEl.getAttribute('mode') != 'dark') {
-            root.style.setProperty('--clr-font', 'var(--dmAlmostWhite)');
-            root.style.setProperty('--clr-sidebars', 'var(--dmAlmostBlack)');
-            root.style.setProperty('--clr-BG', 'var(--dmBG)');
-            root.style.setProperty('--clr-box', 'var(--dmDarkGrey)');
-            root.style.setProperty('--clr-button', 'var(--dmMidGrey)');
-            root.style.setProperty('--clr-font-secondary', 'var(--dmBrightGrey)');
+            root.style.setProperty("color-scheme", "dark");
             selecEl.setAttribute('mode', 'dark');
             setCookie("ldMode", "0");
         }

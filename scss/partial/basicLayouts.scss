@@ -19,7 +19,7 @@ h3 {
 
 // creates sidebars
 #bg {
-    background-color: var(--clr-BG);
+    background-color: light-dark(var(--lmBG), var(--dmBG));
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -61,7 +61,7 @@ h3 {
 }
 
 .box {
-    background-color: var(--clr-box);
+    background-color: light-dark(var(--lmBox), var(--dmBox));
     border-radius: 12px;
     padding: 16px;
     display: flex;
@@ -80,8 +80,8 @@ label {
 
 input[type=text] {
     background: none;
-    color: var(--clr-font);
-    border: 2px solid var(--clr-font-secondary);
+    color: light-dark(var(--lmFont), var(--dmFont));
+    border: 2px solid light-dark(var(--lmFontSecondary), var(--dmFontSecondary));
     border-radius: 6px;
     text-align: center;
     padding: 6px;
@@ -89,7 +89,7 @@ input[type=text] {
     font-size: 12px;
 
     &::placeholder {
-        color: var(--clr-font-secondary);
+        color: light-dark(var(--lmFontSecondary), var(--dmFontSecondary));
         opacity: 1;
         font-weight: normal;
     }
@@ -98,7 +98,7 @@ input[type=text] {
 input[type=range] {
     -webkit-appearance: none;
     appearance: none;
-    background-color: var(--clr-button);
+    background-color: light-dark(var(--lmButton), var(--dmButton));
     height: 8px;
     border-radius: 2px;
 
@@ -107,7 +107,7 @@ input[type=range] {
         height: 28px;
         border-radius: 50%;
         border: none;
-        background-color: var(--clr-font-secondary);
+        background-color: light-dark(var(--lmFontSecondary), var(--dmFontSecondary));
     }
 }
 
@@ -119,8 +119,8 @@ input[type=range] {
 }
 
 button {
-    background-color: var(--clr-button);
-    color: var(--clr-font);
+    background-color: light-dark(var(--lmButton), var(--dmButton));
+    color: light-dark(var(--lmFont), var(--dmFont));
     border: none;
     border-radius: 6px;
     padding: 8px 12px;
@@ -165,7 +165,7 @@ button.disabled {
     & > svg {
         height: 18px;
         width: 18px;
-        fill: var(--clr-font);
+        fill: light-dark(var(--lmFont), var(--dmFont));
     }
 }
 
@@ -177,7 +177,7 @@ header {
 }
 
 footer {
-    background-color: var(--clr-BG);
+    background-color: light-dark(var(--lmBG), var(--dmBG));
     padding: 24px;
     position: relative;
 
@@ -190,6 +190,6 @@ footer {
         content: '';
         height: 4px;
         width: 100%;
-        background-color: var(--clr-box);
+        background-color: light-dark(var(--lmBox), var(--dmBox));
     }
 }

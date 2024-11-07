@@ -15,13 +15,30 @@
     --dmDarkGrey: #424242;
     --dmMidGrey: #5F5F5F;
 
+    // Light Mode Colors
+    --lmFont: #1D201B;
+    --lmSidebars: #FBFBFB;
+    --lmBG: #FFFFFF;
+    --lmBox: #F2F2F2;
+    --lmFontSecondary: #7E7E7E;
+    --lmButton: #D7D7D7;
+
+    // Dark Mode Colors
+    --dmSidebars: #1F1F1F;
+    --dmFont: #F5F5F5;
+    --dmBG: #323232;
+    --dmFontSecondary: #EAEAEA;
+    --dmBox: #424242;
+    --dmButton: #5F5F5F;
+
+    color-scheme: light dark;
     // Init Light Mode
-    --clr-font: var(--lmAlmostBlack);
-    --clr-sidebars: var(--lmAlmostWhite);
-    --clr-BG: var(--lmBG);
-    --clr-box: var(--lmBrightGrey);
-    --clr-button: var(--lmMidGrey);
-    --clr-font-secondary: var(--lmDarkGrey);
+    --clr-font: light-dark(var(--lmAlmostBlack), var(--dmAlmostWhite));
+    --clr-sidebars: light-dark(var(--lmAlmostWhite), var(--dmAlmostBlack));
+    --clr-BG: light-dark(var(--lmBG), var(--dmBG));
+    --clr-box: light-dark(var(--lmBrightGrey), var(--dmDarkGrey));
+    --clr-button: light-dark(var(--lmMidGrey), var(--dmMidGrey));
+    --clr-font-secondary: light-dark(var(--lmDarkGrey), var(--dmBrightGrey));
 
     --clr-optPath: #1C8DE9;
     --clr-yourPath: #EB09F3;

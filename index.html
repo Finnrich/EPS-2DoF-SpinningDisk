@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="diagramClasses.js" defer></script>
     <script src="main.js" defer></script>
     <script src="plot.js" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script src="serial.js" defer></script>
+    <script src="webserial.js" defer></script>
     <title>BTSD - Overview</title>
 </head>
 <body>
     <div id="all-cont">
         <div id="bg">
+            <div id="debug" class="hidden"></div>
             <div id="pd-inside">
                 <header>
                     <h1>2DoF Spinning Disk</h1>
@@ -44,12 +45,44 @@
                         </div>
                         <div id="sensor-data" class="box">
                             <h3>Sensor Data</h3>
+                            <div id="sensor-linear-position">
+                                <div class="box-head">
+                                    <h4>Linear Position</h4>
+                                    <span id="linear-position-value">0</span>
+                                </div>
+                                <canvas class="linear-diagram"></canvas>
+                            </div>
+                            <div id="sensor-offset">
+                                <div class="box-head">
+                                    <h4>Offset</h4>
+                                    <span id="offset-value">0</span>
+                                </div>
+                                <canvas class="linear-diagram"></canvas>
+                            </div>
                         </div>
                     </div>
                     <div id="info-center" class="info-section">
                         <div id="disk-diagram" class="box">
+                            <div class="center-cont">
+                                <h3 style="color: var(--clr-yourPath)">Your Path</h3>
+                                <h3 style="color: var(--clr-optPath)">Optimal Path</h3>
+                            </div>
                             <div id="disk-diagram-cont">
                                 <canvas></canvas>
+                            </div>
+                            <canvas id="lin-pos-to-opt" class="linear-diagram"></canvas>
+                            <div id="center-disk-values-cont">
+                                <div class="right-cont">
+                                    <p>Disk Speed:</p>
+                                    <p>Disk Code:</p>
+                                </div>
+                                <div class="left-cont">
+                                    <div class="space-btw">
+                                        <span id="disk-speed-value">0</span>
+                                        <span>RPM</span>
+                                    </div>
+                                    <p id="disk-code-value">AM57</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -57,7 +90,7 @@
                         <div id="evaluation" class="box">
                             <h3>Evaluation</h3>
                             <div id="points-cont">
-                                <span id="points-num"></span>
+                                <span id="points-num">0</span>
                                 <span id="points-txt">Points</span>
                                 <div id="points-possible-cont">
                                     /
@@ -72,13 +105,13 @@
                         </div>
                         <div id="manual-mode" class="box">
                             <div class="buttons-cont">
-                                <button disabled id="activate-manual-mode">Activate Manual Mode</button>
+                                <button id="activate-manual-mode" onclick="toggleManualMode()">Activate Manual Mode</button>
                                 <button id="fullscreen-manual-mode" class="icon-btn">
                                     <svg id="icon-open-fullscreen" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M120-120v-320h80v184l504-504H520v-80h320v320h-80v-184L256-200h184v80H120Z"/></svg>
                                     <svg class="hidden" id="icon-close-fullscreen" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="m136-80-56-56 264-264H160v-80h320v320h-80v-184L136-80Zm344-400v-320h80v184l264-264 56 56-264 264h184v80H480Z"/></svg>
                                 </button>
                             </div>
-                            <div class="inputs-cont">
+                            <div class="inputs-cont disabled">
                                 <label for="range-linear-motor">Move linear motor</label>
                                 <input type="range" value="50" name="range-linear-motor" id="range-linear-motor">
                                 <label for="range-disk-speed">Disk speed</label>

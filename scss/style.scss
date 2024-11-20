@@ -1,6 +1,7 @@
 @use "partial/variables.scss";
 @use "partial/basicLayouts.scss";
 @use "partial/singleElements.scss";
+@use "partial/fonts.scss";
 
 * {
     margin: 0;
@@ -20,7 +21,7 @@ html {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 body {

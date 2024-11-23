@@ -1,8 +1,8 @@
 {
-  "dependencies": {
-    "sass": "^1.80.4"
-  },
   "scripts": {
     "watch_sass": "sass --watch ./scss/style.scss ./style.css --style compressed"
+  },
+  "devDependencies": {
+    "sass": "^1.81.0"
   }
 }

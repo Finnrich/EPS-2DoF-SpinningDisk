@@ -119,3 +119,29 @@ canvas#lin-pos-to-opt {
     font-size: 42px;
     font-weight: bold;
 }
+
+#filters {
+    display: flex;
+    flex-direction: row;
+    column-gap: 18px;
+}
+
+#leaderboard {
+    background-color: light-dark(var(--lmBox), var(--dmBox));
+    border: none;
+    border-collapse: collapse;
+    border-radius: 12px;
+    text-align: center;
+
+    tr:nth-child(even) {
+        background-color: light-dark(var(--lmBG), var(--dmBG));
+    }
+
+    th {
+        padding: 8px;
+    }
+
+    td {
+        padding: 6px;
+    }
+}

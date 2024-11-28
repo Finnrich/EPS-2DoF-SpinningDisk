@@ -24,14 +24,48 @@
                     </header>
                     <nav>
                         <a href="../index.html">
-                            <button id="back" class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M560-200 200-480l360-280v560Z"/></svg></button>
+                            <button id="back" class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></button>
                         </a>
                         <h2>Leaderboard</h2>
                     </nav>
                     <div id="filters">                    
-                        <button id="start">Session-ID</button>
-                        <button id="start">Disk-Code</button>
+                        <div class="filter">
+                            <h3>Session-ID</h3>
+                            <input type="text" name="sid" id="sid" placeholder="Enter Session-ID">
+                            <button id="back" class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>      
+                        </div>
+                        <div class="filter">
+                            <h3>Disk-ID</h3>
+                            <input type="text" name="did" id="did" placeholder="Enter Disk-ID">
+                            <button id="back" class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>      
+                        </div>
+                        <button class="filter" id="sync">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-160v-80h110l-16-14q-52-46-73-105t-21-119q0-111 66.5-197.5T400-790v84q-72 26-116 88.5T240-478q0 45 17 87.5t53 78.5l10 10v-98h80v240H160Zm400-10v-84q72-26 116-88.5T720-482q0-45-17-87.5T650-648l-10-10v98h-80v-240h240v80H690l16 14q49 49 71.5 106.5T800-482q0 111-66.5 197.5T560-170Z"/></svg>
+                        </button>
                     </div>
+                    <table id="leaderboard">
+                        <tr>
+                            <th>Username</th>
+                            <th>Score</th>
+                            <th>Timestamp</th>
+                            <th>Disk-ID</th>
+                            <th>Session-ID</th>
+                        </tr>
+                        <tr>
+                            <td>test01</td>
+                            <td>test01</td>
+                            <td>test01</td>
+                            <td>test01</td>
+                            <td>test01</td>
+                        </tr>
+                        <tr>
+                            <td>test02</td>
+                            <td>test02</td>
+                            <td>test02</td>
+                            <td>test02</td>
+                            <td>test02</td>
+                        </tr>
+                    </table>
                 </div>
                 <footer>© EPS Group Sergio</footer>
             </div>

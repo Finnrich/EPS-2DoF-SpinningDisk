@@ -15,13 +15,11 @@ function changeLDMode(isLightmode) { // boolean -> 1: light, 0: dark
     const selecEl = document.getElementById('ld-modes-selection');
     const root = document.querySelector(':root');
     if (isLightmode) {
-        if (selecEl.getAttribute('mode') != 'light') {
-            root.style.setProperty("color-scheme", "light");
-            selecEl.setAttribute('mode', 'light');
-            setCookie("ldMode", "1");
-            clrBG = getComputedStyle(document.body).getPropertyValue('--lmBG');
-            clrButton = getComputedStyle(document.body).getPropertyValue('--lmButton');
-        }
+        root.style.setProperty("color-scheme", "light");
+        selecEl.setAttribute('mode', 'light');
+        setCookie("ldMode", "1");
+        clrBG = getComputedStyle(document.body).getPropertyValue('--lmBG');
+        clrButton = getComputedStyle(document.body).getPropertyValue('--lmButton');
     } else {
         if (selecEl.getAttribute('mode') != 'dark') {
             root.style.setProperty("color-scheme", "dark");

@@ -21,13 +21,11 @@ function changeLDMode(isLightmode) { // boolean -> 1: light, 0: dark
         clrBG = getComputedStyle(document.body).getPropertyValue('--lmBG');
         clrButton = getComputedStyle(document.body).getPropertyValue('--lmButton');
     } else {
-        if (selecEl.getAttribute('mode') != 'dark') {
-            root.style.setProperty("color-scheme", "dark");
-            selecEl.setAttribute('mode', 'dark');
-            setCookie("ldMode", "0");
-            clrBG = getComputedStyle(document.body).getPropertyValue('--dmBG');
-            clrButton = getComputedStyle(document.body).getPropertyValue('--dmButton');
-        }
+        root.style.setProperty("color-scheme", "dark");
+        selecEl.setAttribute('mode', 'dark');
+        setCookie("ldMode", "0");
+        clrBG = getComputedStyle(document.body).getPropertyValue('--dmBG');
+        clrButton = getComputedStyle(document.body).getPropertyValue('--dmButton');
     }
     LinearDiagram.ldModeChange();
 }

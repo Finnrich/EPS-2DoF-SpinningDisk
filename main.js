@@ -70,7 +70,6 @@ const manualInput = document.getElementById('range-linear-motor');
 // Manual range
 const diskSpeedInput = document.getElementById('range-disk-speed');
 const diskSpeedValue = document.getElementById('disk-speed-value');
-const linearPosValue = document.getElementById('linear-position-value');
 
 diskSpeedInput.addEventListener('input', () => {
     const ppr = 500 - 4.5*diskSpeedInput.value; // points per revolution
@@ -78,20 +77,14 @@ diskSpeedInput.addEventListener('input', () => {
     renderValues();
 });
 
-manualInput.addEventListener('input', renderValues);
-
 function renderValues() {
     let diskRpm = 0;
-    let linPos = 0;
     if (manualMode) {
         // RPM
         const ppr = 500 - 4.5*diskSpeedInput.value; // points per revolution
         diskRpm = Math.round(60000 / (ppr * sendDataInterval));
-        // Linear Position
-        linPos = manualInput.value;
     }
     diskSpeedValue.innerText = diskRpm;
-    linearPosValue.innerText = linPos;
 }
 
 

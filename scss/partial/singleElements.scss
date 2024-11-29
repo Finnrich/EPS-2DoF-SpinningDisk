@@ -145,3 +145,16 @@ canvas#lin-pos-to-opt {
         padding: 6px;
     }
 }
+
+#eval-progbar {
+    height: 10px;
+    background-color: light-dark(var(--lmButton), var(--dmButton));
+
+    & > #eval-progbar-fill {
+        height: 100%;
+        width: 0;
+        max-width: 100%;
+        background-color: green;
+        transition: width 200ms ease-out;
+    }
+}

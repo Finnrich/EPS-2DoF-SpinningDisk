@@ -1,0 +1,8 @@
+CREATE TABLE `runs` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(16) NOT NULL,
+    session_id VARCHAR(5) NOT NULL,
+    disk_code VARCHAR(4) NOT NULL,
+    eval DECIMAL(3,2) NOT NULL,
+    ts_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)

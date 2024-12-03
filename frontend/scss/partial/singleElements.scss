@@ -51,6 +51,23 @@
     }
 }
 
+#controlling {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 12px;
+}
+
+#disconnect-cont {
+    background-color: light-dark(var(--lmBox), var(--dmBox));
+    font-size: 14px;
+    border-radius: 12px;
+    padding-right: 12px;
+    display: flex;
+    column-gap: 12px;
+    align-items: center;
+}
+
 #disk-diagram {
     align-items: center;
 

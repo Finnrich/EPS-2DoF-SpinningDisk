@@ -97,6 +97,10 @@ nav {
     column-gap: 12px;
     align-items: center;
     width: max-content;
+
+    & > svg {
+        fill: light-dark(var(--lmFont), var(--dmFont));
+    }
 }
 
 .center-cont {

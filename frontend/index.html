@@ -33,36 +33,70 @@
                                 <button id="start" class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M336-216v-528l408 264-408 264Zm73-265Zm-1 133 204-132-204-132v264Z"/></svg></button>
                                 <button id="stop" class="icon-btn hidden"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M336-624v288-288Zm-72 360v-432h432v432H264Zm72-72h288v-288H336v288Z"/></svg></button>
                             </div>
-                            <div id="connection" >
-                                <button id="connect" class="icon-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M479.79-96Q450-96 429-117.15T408-168q0-19.53 9.5-36.26Q427-221 444-230v-106H324q-29.7 0-50.85-21.04Q252-378.08 252-407.63V-490q-17-9-26.5-25.5T216-552q0-29.7 21.21-50.85 21.21-21.15 51-21.15T339-602.85q21 21.15 21 50.85 0 20-9.5 36.5T324-490v82h120v-312h-84l120-144 120 144h-84v312h120v-72h-36v-144h144v144h-36v72q0 29.7-21.15 50.85Q665.7-336 636-336H516v106q17.1 9.11 26.55 25.5 9.45 16.4 9.45 36.44Q552-138 530.79-117q-21.21 21-51 21Z"/></svg>
-                                </button>
-                                <div id="disconnect-cont" class="hidden">
+                            <div id="connection">
+                                <div class="connection-status">
+                                    <button id="connect" class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M479.79-96Q450-96 429-117.15T408-168q0-19.53 9.5-36.26Q427-221 444-230v-106H324q-29.7 0-50.85-21.04Q252-378.08 252-407.63V-490q-17-9-26.5-25.5T216-552q0-29.7 21.21-50.85 21.21-21.15 51-21.15T339-602.85q21 21.15 21 50.85 0 20-9.5 36.5T324-490v82h120v-312h-84l120-144 120 144h-84v312h120v-72h-36v-144h144v144h-36v72q0 29.7-21.15 50.85Q665.7-336 636-336H516v106q17.1 9.11 26.55 25.5 9.45 16.4 9.45 36.44Q552-138 530.79-117q-21.21 21-51 21Z"/></svg></button>
+                                    <span id="device-id">Connect</span>    
+                                </div>
+                                <div class="connection-status hidden">
                                     <button id="disconnect" class="icon-btn"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z"/></svg></button>
                                     <span id="device-id">163982</span>
                                 </div>
                             </div>
                         </div>
                         <div id="disk-code" class="box">
-                            <h3>Disk Code</h3>
+                            <div id="param-header">
+                                <h3>Parameters</h3>
+                                <button id="disconnect" class="icon-btn" onclick="uploadParams()"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M444-336v-342L339-573l-51-51 192-192 192 192-51 51-105-105v342h-72ZM263.72-192Q234-192 213-213.15T192-264v-72h72v72h432v-72h72v72q0 29.7-21.16 50.85Q725.68-192 695.96-192H263.72Z"/></svg></button>
+                            </div>
                             <input type="text" name="diskcode" id="dc-input" placeholder="Enter disk code" maxlength="4">
+                            <div id="values">
+                                <div id="linear-param">
+                                    <h4>Linear</h4>
+                                    <div class="parameter">
+                                        <label for="l-kpid">kpid:</label>
+                                        <input type="number" name="l-kpid" id="l-kpid">
+                                    </div>
+                                    <div class="parameter">
+                                        <label for="l-tn">tn:</label>
+                                        <input type="number" name="l-tn" id="l-tn">
+                                    </div>
+                                    <div class="parameter">
+                                        <label for="l-tv">tv:</label>
+                                        <input type="number" name="l-tv" id="l-tv">
+                                    </div>
+                                </div>
+                                <div id="rotation-param">
+                                    <h4>Rotational</h4>
+                                    <div class="parameter">
+                                        <label for="r-kpid">kpid:</label>
+                                        <input type="number" name="r-kpid" id="r-kpid">
+                                    </div>
+                                    <div class="parameter">
+                                        <label for="r-tn">tn:</label>
+                                        <input type="number" name="r-tn" id="r-tn">
+                                    </div>
+                                    <div class="parameter">
+                                        <label for="r-tv">tv:</label>
+                                        <input type="number" name="r-tv" id="r-tv">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div id="sensor-data" class="box">
-                            <h3>Sensor Data</h3>
-                            <div id="sensor-linear-position">
-                                <div class="box-head">
-                                    <h4>Linear Position</h4>
-                                    <span id="linear-position-value">0</span>
-                                </div>
-                                <canvas class="linear-diagram"></canvas>
+                        <div id="evaluation" class="box">
+                            <h3>Evaluation</h3>
+                            <div id="points-cont">
+                                <span id="points-num">0</span>
+                                <span id="points-txt">%</span>
                             </div>
-                            <div id="sensor-offset">
-                                <div class="box-head">
-                                    <h4>Offset</h4>
-                                    <span id="offset-value">0</span>
-                                </div>
-                                <canvas class="linear-diagram"></canvas>
+                            <div id="eval-progbar">
+                                <div id="eval-progbar-fill"></div>
                             </div>
+                            <input type="text" name="sid" id="sid" placeholder="Enter Session-ID">
+                            <button disabled id="upload-result" class="disabled">Upload Result</button>
+                            <a href="html/leaderboard.html">
+                                <button id="view-leaderboard">View Leaderboard</button>
+                            </a>
                         </div>
                     </div>
                     <div id="info-center" class="info-section">
@@ -91,21 +125,22 @@
                         </div>
                     </div>
                     <div id="info-right" class="info-section">
-                        <div id="evaluation" class="box">
-                            <h3>Evaluation</h3>
-                            <div id="points-cont">
-                                <span id="points-num">0</span>
-                                <span id="points-txt">%</span>
+                        <div id="sensor-data" class="box">
+                            <h3>Sensor Data</h3>
+                            <div id="sensor-linear-position">
+                                <div class="box-head">
+                                    <h4>Linear Position</h4>
+                                    <span id="linear-position-value">0</span>
+                                </div>
+                                <canvas class="linear-diagram"></canvas>
                             </div>
-                            <div id="eval-progbar">
-                                <div id="eval-progbar-fill"></div>
+                            <div id="sensor-offset">
+                                <div class="box-head">
+                                    <h4>Offset</h4>
+                                    <span id="offset-value">0</span>
+                                </div>
+                                <canvas class="linear-diagram"></canvas>
                             </div>
-                            <input type="text" name="username" id="username" placeholder="Enter Username">
-                            <input type="text" name="sid" id="sid" placeholder="Enter Session-ID">
-                            <button disabled id="upload-result" class="disabled">Upload Result</button>
-                            <a href="html/leaderboard.html">
-                                <button id="view-leaderboard">View Leaderboard</button>
-                            </a>
                         </div>
                         <div id="manual-mode" class="box">
                             <div class="buttons-cont">

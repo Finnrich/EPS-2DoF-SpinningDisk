@@ -58,7 +58,43 @@
     column-gap: 12px;
 }
 
-#disconnect-cont {
+#param-header {
+    display: flex;
+    justify-content: space-between; /* Distribute space between items */
+}
+
+#values {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+
+    #linear-param,
+    #rotation-param {
+        display: flex;
+        flex-direction: column; 
+        gap: 8px;
+        width: 100px;
+
+        & > .parameter {
+            display: flex;
+            width: 100px;
+            box-sizing: border-box;
+
+            & > label {
+                flex: 0 0 30%;    /* Label nimmt 30% der Breite ein */
+                box-sizing: border-box;
+            }
+            
+            & > input {
+                flex: 1 1 70%;    /* Input nimmt den verbleibenden Platz ein */
+                max-width: 70%;   /* Verhindert Überschreiten der Breite */
+                box-sizing: border-box;
+            }
+        }  
+    }    
+}
+
+.connection-status {
     background-color: light-dark(var(--lmBox), var(--dmBox));
     font-size: 14px;
     border-radius: 12px;

@@ -83,6 +83,24 @@ function renderValues() {
     diskSpeedValue.innerText = diskRpm;
 }
 
+// Arduino
+// Upload Parameters
+function uploadParams() {
+    // Linear Values
+    const lkpid = document.getElementById('l-kpid').value;
+    const ltn   = document.getElementById('l-tn').value;
+    const ltv   = document.getElementById('l-tv').value;
+
+    // Rotational Values
+    const rkpid = document.getElementById('r-kpid').value;
+    const rtn   = document.getElementById('r-tn').value;
+    const rtv   = document.getElementById('r-tv').value;
+
+    // Upload to Arduino
+    //
+    // 
+    //
+}
 
 // ------------------------------- //
 // ------------ UTIL ------------- //

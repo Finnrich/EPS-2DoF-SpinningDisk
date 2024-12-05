@@ -141,6 +141,13 @@ input[type=text] {
     }
 }
 
+input[type=number] {
+    background: none;
+    border: none;
+    border-bottom: 1px solid light-dark(var(--lmFontSecondary), var(--dmFontSecondary));
+    text-align: left;
+}
+
 input[type=range] {
     appearance: none;
     background-color: light-dark(var(--lmButton), var(--dmButton));

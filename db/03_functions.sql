@@ -27,7 +27,6 @@ BEGIN
 
     RETURN s_id;
 END $$
-DELIMITER;
 
 -- Delete old sessions
 -- Used by event `clean_sessions` or for manual use
@@ -37,4 +36,3 @@ CREATE PROCEDURE delete_old_sessions(age_in_days INT)
 BEGIN
     DELETE FROM `2dof_sessions` WHERE DATE_ADD(ts_created, INTERVAL age_in_days DAY) < CURRENT_TIMESTAMP;
 END $$
-DELIMITER;

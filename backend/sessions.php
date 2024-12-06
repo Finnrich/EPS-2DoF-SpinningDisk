@@ -59,31 +59,43 @@ switch($_SERVER['REQUEST_METHOD']) {
 
     // Get sessions created by user (only teachers)
     case 'GET':
-        $sql = "SELECT session_id FROM `2dof_sessions` WHERE created_by=%d";
+        $sql = "SELECT s.session_id, COUNT(r.id) AS run_count
+                FROM `2dof_sessions` AS s
+                LEFT JOIN `2dof_runs` AS r ON s.id = r.session_ref
+                WHERE s.created_by=%d
+                GROUP BY s.id
+                ORDER BY s.ts_created DESC";
         $query = $wpdb->prepare($sql, $cur_user->get('ID'));
         $result = $wpdb->get_results($query, $output=ARRAY_A);
+        if (count($result) === 0) {
+            http_response_code(404);
+            exit;
+        }
         echo(json_encode($result));
         exit;
 
     // Delete a session (only by creator)
     case 'DELETE':
 
+        $input = file_get_contents('php://input');
+        parse_str($input, $data);
+
         $sql = "DELETE FROM `2dof_sessions` WHERE created_by=%d";
         $sql = $wpdb->prepare($sql, $cur_user->get('ID'));
 
-        if (isset($_GET['byage'])) { // delete by age (30 days)
+        if (isset($data['byage'])) { // delete by age (30 days)
 
             $query = $sql . " AND DATE_ADD(ts_created, INTERVAL 30 DAY) < CURRENT_TIMESTAMP";
 
         } else { // delete by session ID
 
-            if (!isset($_GET['sid'])) {
+            if (!isset($data['sid'])) {
                 http_response_code(400);
                 exit;
             }
 
             $sql .= " AND session_id=%s";
-            $query = $wpdb->prepare($sql, $_GET['sid']);
+            $query = $wpdb->prepare($sql, $data['sid']);
         }
 
         $result = $wpdb->query($query);

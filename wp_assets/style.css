@@ -1,0 +1,33 @@
+:where(.wp-site-blocks *:focus){outline-width:2px;outline-style:solid}
+
+/* CUSTOM */
+body.logged-in .nav-logged-in, .nav-logged-out {
+    display: flex;
+}
+
+body.logged-in .nav-logged-out, .nav-logged-in {
+    display: none;
+}
+
+.dof-session {
+    display: flex;
+    border-top: 1px solid #bbb;
+}
+.dof-session-id {
+    font-family: monospace;
+}
+.dof-created-session:not(:has(.dof-session)) {
+    display: none;
+}
+
+.dof-session > span {
+	width: 100%;
+}
+
+.dof-session-delete {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    align-self: right;
+}

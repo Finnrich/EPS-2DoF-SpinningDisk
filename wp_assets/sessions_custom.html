@@ -1,0 +1,91 @@
+<div class="dof-sessions-cont">
+    <div class="dof-created-session">
+        <p>Created session:</p>
+    </div>
+    <div class="dof-all-sessions">
+        <p>Your sessions:</p>
+    </div>
+</div>
+
+<script>
+    const sessions_url = "../2dof/api/v1/sessions";
+    
+    function dof_get_sessions() {
+        $.ajax({
+            type: 'GET',
+            url: sessions_url,
+            success: function(resultData) {
+                $('.dof-all-sessions > .dof-session').remove();
+                if (resultData.length > 0) {
+                    resultData.forEach((session) => {
+                        const sEl = $('<div></div>')
+                            .addClass('dof-session')
+                            .attr('sid', session.session_id)
+                            .append($('<span></span>')
+                                .addClass('dof-session-id')
+                                .text(session.session_id))
+                            .append($('<span></span>')
+                                .text(session.run_count + ' runs'))
+                            .append($('<button onclick="dof_delete_session(event)">Delete</button>')
+                                .addClass('dof-session-delete'))
+                        ;
+                        $('.dof-all-sessions').append(sEl);
+                    });
+                }
+            }
+        });
+    }
+    
+    function dof_create_session() {
+        $.ajax({
+            type: 'POST',
+            url: sessions_url,
+            success: function(resultData) {
+                $('.dof-created-session > .dof-session').remove();
+                const sEl = $('<div></div>')
+                    .addClass('dof-session')
+                    .attr('sid', resultData.session_id)
+                    .append($('<span></span>')
+                        .addClass('dof-session-id')
+                        .text(resultData.session_id))
+                    .append($('<span></span>')
+                        .text('0 runs'))
+                    .append($('<button onclick="dof_delete_session(event)">Delete</button>')
+                        .addClass('dof-session-delete'))
+                ;
+                $('.dof-created-session').append(sEl);
+            }
+        });
+    }
+    
+    function dof_delete_session(e) {
+        const sid = $(e.target).parent().attr('sid');
+        $.ajax({
+            type: 'DELETE',
+            url: sessions_url,
+            data: {
+                'sid': sid
+            },
+            complete: function() {
+                $(e.target).parent().remove();
+            }
+        });
+    }
+    
+    function dof_delete_old_sessions() {
+        $.ajax({
+            type: 'DELETE',
+            url: sessions_url,
+            data: {
+                'byage': ''
+            },
+            complete: function() {
+                location.reload();
+            }
+        });
+    }
+    
+    dof_get_sessions();
+    $('.dof-create-session').on('click', dof_create_session);
+    $('.dof-delete-old-sessions').on('click', dof_delete_old_sessions);
+    </script>

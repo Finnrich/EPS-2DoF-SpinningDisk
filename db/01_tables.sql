@@ -24,3 +24,5 @@ CREATE TABLE `2dof_runs` (
     eval DECIMAL(5,2) NOT NULL,
     ts_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE `2dof_runs` ADD UNIQUE `prevent_same_run`(user, session_ref, disk_ref, eval);

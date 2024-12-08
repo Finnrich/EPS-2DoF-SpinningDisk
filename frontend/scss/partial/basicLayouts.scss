@@ -46,12 +46,6 @@ nav {
     height: 100%;
 }
 
-#information {
-    display: flex;
-    height: 100%;
-    justify-content: space-between;
-}
-
 .info-section {
     display: flex;
     flex-direction: column;
@@ -124,7 +118,7 @@ label {
     font-size: 12px;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
     background: none;
     color: light-dark(var(--lmFont), var(--dmFont));
     border: 2px solid light-dark(var(--lmFontSecondary), var(--dmFontSecondary));
@@ -133,11 +127,29 @@ input[type=text] {
     padding: 6px;
     font-weight: bold;
     font-size: 12px;
+    outline: 0;
+    width: 100%;
 
     &::placeholder {
         color: light-dark(var(--lmFontSecondary), var(--dmFontSecondary));
         opacity: 1;
         font-weight: normal;
+    }
+}
+
+.txt-input-with-icon-btn {
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid light-dark(var(--lmFontSecondary), var(--dmFontSecondary));
+    border-radius: 6px;
+    overflow: hidden;
+
+    & > input[type=text], input[type=password] {
+        border: none;
+    }
+
+    & > button.icon-btn, > a.icon-btn {
+        border-radius: 0;
     }
 }
 
@@ -173,6 +185,22 @@ input[type=range] {
     }
 }
 
+form {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+form::after {
+    position: absolute;
+    display: block;
+    content: attr(err-msg);
+    top: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: #df2828;
+}
+
 .inputs-cont {
     display: flex;
     flex-direction: column;
@@ -180,7 +208,7 @@ input[type=range] {
     margin: 4px 0 12px 0;
 }
 
-button {
+button, .button {
     background-color: light-dark(var(--lmButton), var(--dmButton));
     color: light-dark(var(--lmFont), var(--dmFont));
     border: none;
@@ -219,9 +247,9 @@ button.disabled {
     gap: 8px;
 }
 
-.icon-btn {
-    width: 32px !important;
-    height: 32px !important;
+button.icon-btn, a.icon-btn {
+    width: 32px;
+    height: 32px;
     padding: 7px;
 
     & > svg {
@@ -259,4 +287,64 @@ footer {
 .linear-diagram {
     border: 1px solid light-dark(var(--lmButton), var(--dmButton));
     border-radius: 4px;
+}
+
+.login-required-cont {
+	position: relative;
+}
+
+.login-required-overlay {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	height: 100%;
+	padding: 8px;
+	border-radius: 6px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 4px;
+	border: 2px solid light-dark(var(--lmButton), var(--dmButton));
+	background-color: light-dark(var(--lmBox), var(--dmBox));
+}
+
+.popup {
+    z-index: 10;
+}
+
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: light-dark(var(--lmBox), var(--dmBox));
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 256px;
+}
+
+.popup-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    display: block;
+    background-color: #000;
+    opacity: 33%;
+}
+
+input.mono {
+    font-family: monospace;
+    font-size: 14px;
+}
+
+input.mono::placeholder {
+    font-family: 'Inter';
+    font-size: 12px;
 }

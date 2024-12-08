@@ -148,6 +148,7 @@ class DiskDiagram extends Diagram {
     }
 
     drawOptPathImg() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if (this.optPathImg) {
             this.ctx.drawImage(
                 this.optPathImg,

@@ -8,6 +8,18 @@
     }
 }
 
+#leaderboard-page {
+	display: flex;
+	flex-direction: column;
+	gap: 42px;
+}
+
+#information-page {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+}
+
 #ld-modes {
 
     background-color: light-dark(var(--lmButton), var(--dmButton));
@@ -173,13 +185,13 @@ canvas#lin-pos-to-opt {
     font-weight: bold;
 }
 
-#filters {
+#lb-form {
     display: flex;
     flex-direction: row;
     column-gap: 18px;
 }
 
-#leaderboard {
+#leaderboard-table {
     background-color: light-dark(var(--lmBox), var(--dmBox));
     border: none;
     border-collapse: collapse;
@@ -197,6 +209,19 @@ canvas#lin-pos-to-opt {
     td {
         padding: 6px;
     }
+
+    tr:only-child {
+        position: relative;
+
+        &::after {
+            content: "No runs found";
+            display: block;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: calc(100% + 8px);
+        }
+    }
 }
 
 #eval-progbar {
@@ -210,4 +235,10 @@ canvas#lin-pos-to-opt {
         background-color: green;
         transition: width 200ms ease-out;
     }
+}
+
+#upload-run-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }

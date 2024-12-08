@@ -44,9 +44,10 @@ switch($_SERVER['REQUEST_METHOD']) {
     // Upload a run
     case 'POST':
         if (!(isset($_POST['sid']) && isset($_POST['did']) && isset($_POST['eval']))) {
+            http_response_code(400);
             exit;
         }
-        $sql = "INSERT INTO `2dof_runs` (user, session_ref, disk_ref, eval) VALUES (
+        $sql = "REPLACE INTO `2dof_runs` (user, session_ref, disk_ref, eval) VALUES (
                     %d,
                     (SELECT id FROM `2dof_sessions` WHERE session_id = %s),
                     (SELECT id FROM `2dof_disks` WHERE disk_code = %s),
@@ -54,10 +55,16 @@ switch($_SERVER['REQUEST_METHOD']) {
                 )"
         ;
         $query = $wpdb->prepare($sql, $cur_user->get('ID'), $_POST['sid'], $_POST['did'], $_POST['eval']);
-        $result = $wpdb->query($query, $output=ARRAY_A);
+        $result = $wpdb->query($query);
         if ($result === false) {
-            http_response_code(404);
+            if (str_starts_with($wpdb->last_error, 'Duplicate')) { // Only doing something if INSERT
+                http_response_code(409);
+            } else {
+                http_response_code(404);
+            }
+            exit;
         }
+        echo('{}');
         exit;
 
     // Get runs
@@ -92,18 +99,18 @@ switch($_SERVER['REQUEST_METHOD']) {
             $sql = $wpdb->prepare($sql, $_GET['did']);
         }
 
-        $sql .= " LIMIT ". $items_per_page ." OFFSET %d";
+        $sql .= " ORDER BY r.eval DESC LIMIT ". $items_per_page ." OFFSET %d";
 
         $query = $wpdb->prepare($sql, $page*$items_per_page);
         $result = $wpdb->get_results($query, $output=ARRAY_A);
 
         if (count($result) === 0) {
             http_response_code(404);
+            exit;
         }
 
         $return = $result;
 
         echo(json_encode($return));
         exit;
-
 }

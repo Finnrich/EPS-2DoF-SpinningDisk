@@ -181,13 +181,17 @@
                     <form id="lb-form" onsubmit="getLeaderboard(event)">                    
                         <div class="filter">
                             <h3>Session-ID</h3>
-                            <input type="text" name="lb-session-id-input" id="lb-session-id-input" placeholder="Enter Session-ID" required minlength="5" maxlength="5">
-                            <a class="button icon-btn clear-input"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a>      
+                            <div class="buttons-cont">
+                                <input type="text" name="lb-session-id-input" id="lb-session-id-input" placeholder="Enter Session-ID" required minlength="5" maxlength="5">
+                                <a class="button icon-btn clear-input"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a>
+                            </div>
                         </div>
                         <div class="filter">
-                            <h3>Disk-ID</h3>
-                            <input type="text" name="lb-disk-code-input" id="lb-disk-code-input" placeholder="Enter Disk-ID" minlength="4" maxlength="4">
-                            <a class="button icon-btn clear-input"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a>      
+                            <h3>Disk-Code</h3>
+                            <div class="buttons-cont">
+                                <input type="text" name="lb-disk-code-input" id="lb-disk-code-input" placeholder="Enter Disk-Code" minlength="4" maxlength="4">
+                                <a class="button icon-btn clear-input"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a>     
+                            </div> 
                         </div>
                         <button type="submit" class="filter" id="sync">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M160-160v-80h110l-16-14q-52-46-73-105t-21-119q0-111 66.5-197.5T400-790v84q-72 26-116 88.5T240-478q0 45 17 87.5t53 78.5l10 10v-98h80v240H160Zm400-10v-84q72-26 116-88.5T720-482q0-45-17-87.5T650-648l-10-10v98h-80v-240h240v80H690l16 14q49 49 71.5 106.5T800-482q0 111-66.5 197.5T560-170Z"/></svg>
@@ -195,10 +199,11 @@
                     </form>
                     <table id="leaderboard-table">
                         <tr>
+                            <th>Rank</th>
                             <th>Username</th>
                             <th>Score</th>
                             <th>Timestamp</th>
-                            <th>Disk-ID</th>
+                            <th>Disk-Code</th>
                             <th>Session-ID</th>
                         </tr>
                     </table>

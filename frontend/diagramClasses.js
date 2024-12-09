@@ -328,7 +328,6 @@ class LinearDiagram extends Diagram {
         this.ctx.stroke();
         
         if (this.valDisplayEl) {
-            console.log(this.points[0]);
             this.valDisplayEl.innerText = this.points[this.points.length-1];
         }
     }

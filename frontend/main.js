@@ -150,7 +150,6 @@ function login(e) {
     loginForm.setAttribute('err-msg', '');
 
     const loginData = new FormData(loginForm);
-    console.log(loginData);
 
     $.ajax({
         method: 'POST',
@@ -174,7 +173,6 @@ function isLoggedIn() {
         method: 'GET',
         url: '/2dof/api/v1/is_logged_in',
         success: function(resultData) {
-            console.log(resultData);
             if (resultData === "1") {
                 removeLoginRequired();
             }
@@ -253,8 +251,6 @@ const lbTable = document.getElementById('leaderboard-table');
 function getLeaderboard(e=new Event('')) {
     e.preventDefault();
 
-    console.log(e.submitter);
-
     lbForm.setAttribute('err-msg', '');
     $(lbTable).find('tr.entry').remove();
 
@@ -273,14 +269,16 @@ function getLeaderboard(e=new Event('')) {
         url: '/2dof/api/v1/runs',
         data: data,
         success: function(resultData) {
+            $(lbTable).find('tr.entry').remove();
             resultData.forEach((run) => {
                 $(lbTable)
                 .append($('<tr></tr>')
                     .addClass('entry')
+                    .append($('<td></td>'))
                     .append($('<td></td>')
                         .text(run.username))
                     .append($('<td></td>')
-                        .text(run.eval))
+                        .text(run.eval + "%"))
                     .append($('<td></td>')
                         .text(run.ts_created))
                     .append($('<td></td>')

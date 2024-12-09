@@ -36,7 +36,6 @@ setInterval(() => {
         }
         intervalCount++;
     }
-    // console.log(new Date().getMilliseconds());
 }, sendDataInterval);
 
 // --------------------------- //

@@ -245,7 +245,9 @@ function closeLeaderboard() {
 
     // Clear input buttons
     $('.clear-input').on('click', (e) => {
-        e.currentTarget.parentElement.querySelector('input[type=text]').value = '';
+        const inputEl = e.currentTarget.parentElement.querySelector('input[type=text]');
+        inputEl.value = '';
+        inputEl.focus();
     });
 
     // Get & handle leaderboard data
@@ -254,6 +256,8 @@ const lbForm = document.getElementById('lb-form');
 const lbSessionIdInput = document.getElementById('lb-session-id-input');
 const lbDiskCodeInput = document.getElementById('lb-disk-code-input');
 const lbTable = document.getElementById('leaderboard-table');
+const lbPageCount = document.getElementById('lb-page-count');
+const lbPageInput = document.getElementById('lb-page-input');
 
 window.getLeaderboard = getLeaderboard; // global
 function getLeaderboard(e=new Event('')) {
@@ -272,13 +276,18 @@ function getLeaderboard(e=new Event('')) {
         data.did = lbDiskCodeInput.value;
     }
 
+    if (lbPageInput.value !== '') {
+        // set page
+        data.page = lbPageInput.value;
+    }
+
     $.ajax({
         method: 'GET',
         url: '/2dof/api/v1/runs',
         data: data,
         success: function(resultData) {
             $(lbTable).find('tr.entry').remove();
-            resultData.forEach((run) => {
+            resultData.runs.forEach((run) => {
                 $(lbTable)
                 .append($('<tr></tr>')
                     .addClass('entry')
@@ -295,6 +304,14 @@ function getLeaderboard(e=new Event('')) {
                         .text(run.session_id))
                 );
             });
+
+            // page management
+            const pageCount = Math.ceil(resultData.count / resultData.itemsPerPage);
+            lbPageCount.innerText = pageCount;
+            lbPageInput.setAttribute('max', pageCount);
+            lbPageInput.value = resultData.page;
+            lbTable.setAttribute('page', resultData.page);
+            lbTable.style.counterReset = 'entries ' + ((resultData.page - 1) * resultData.itemsPerPage);
         },
         error: function(err) {
             if (err.status === 404) {

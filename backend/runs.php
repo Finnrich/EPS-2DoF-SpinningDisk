@@ -71,22 +71,40 @@ switch($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $return = new stdClass();
 
+        // filter by session id
         if (!isset($_GET['sid'])) {
             http_response_code(400);
             exit;
         }
 
-        // filter by session id
+        // Get count of runs for page management
+        $sql = "SELECT COUNT(r.id) AS count
+                FROM `2dof_runs` AS r
+                LEFT JOIN `2dof_sessions` AS s ON r.session_ref = s.id
+                WHERE s.session_id = %s"
+        ;
 
+        $query = $wpdb->prepare($sql, $_GET['sid']);
+        $result = $wpdb->get_results($query, $output=ARRAY_A);
+        $run_count = intval($result[0]['count']);
+        
         $page = 0;
         $items_per_page = 25;
 
         if (isset($_GET['page'])) {
-            $page = intval($_GET['page']);
+            $page = intval($_GET['page']) - 1;
+
+            // check if $page is too big
+            $page_count = ceil($run_count / $items_per_page);
+            if ($page >= $page_count) {
+                // go to last page
+                $page = $page_count - 1;
+            }
         }
 
         $sql = "SELECT u.user_nicename AS username, s.session_id, d.disk_code, r.eval, r.ts_created
-                FROM `2dof_runs` AS r LEFT JOIN `wpf_users` AS u ON r.user = u.ID
+                FROM `2dof_runs` AS r
+                LEFT JOIN `wpf_users` AS u ON r.user = u.ID
                 LEFT JOIN `2dof_sessions` AS s ON r.session_ref = s.id
                 LEFT JOIN `2dof_disks` AS d ON r.disk_ref = d.id
                 WHERE s.session_id = %s"
@@ -104,12 +122,12 @@ switch($_SERVER['REQUEST_METHOD']) {
         $query = $wpdb->prepare($sql, $page*$items_per_page);
         $result = $wpdb->get_results($query, $output=ARRAY_A);
 
-        if (count($result) === 0) {
-            http_response_code(404);
-            exit;
-        }
-
-        $return = $result;
+        $return = array(
+            "count" => $run_count,
+            "page" => $page + 1,
+            "itemsPerPage" => $items_per_page,
+            "runs" => $result
+        );
 
         echo(json_encode($return));
         exit;

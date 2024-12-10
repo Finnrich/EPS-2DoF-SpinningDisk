@@ -1,5 +1,9 @@
-var clrBG = getComputedStyle(document.body).getPropertyValue('--lmBG');
-var clrButton = getComputedStyle(document.body).getPropertyValue('--lmButton');
+import "./plot";
+import "./serial";
+import LinearDiagram from "./diagrams/LinearDiagram";
+
+import { diskDiagram } from "./plot";
+import { reloadColors, LIGHT, DARK, sendDataInterval } from "./values";
 
 // ------------------------------- //
 // ------- LIGHT-DARK MODE ------- //
@@ -11,6 +15,7 @@ setTimeout(() => { // prevent onreload flashing to default light mode
 }, 50);
 
 // change light/dark mode (onclick)
+window.changeLDMode = changeLDMode; // global
 function changeLDMode(isLightmode) { // boolean -> 1: light, 0: dark
     const selecEl = document.getElementById('ld-modes-selection');
     const root = document.querySelector(':root');
@@ -18,14 +23,12 @@ function changeLDMode(isLightmode) { // boolean -> 1: light, 0: dark
         root.style.setProperty("color-scheme", "light");
         selecEl.setAttribute('mode', 'light');
         setCookie("ldMode", "1");
-        clrBG = getComputedStyle(document.body).getPropertyValue('--lmBG');
-        clrButton = getComputedStyle(document.body).getPropertyValue('--lmButton');
+        reloadColors(LIGHT);
     } else {
         root.style.setProperty("color-scheme", "dark");
         selecEl.setAttribute('mode', 'dark');
         setCookie("ldMode", "0");
-        clrBG = getComputedStyle(document.body).getPropertyValue('--dmBG');
-        clrButton = getComputedStyle(document.body).getPropertyValue('--dmButton');
+        reloadColors(DARK);
     }
     LinearDiagram.ldModeChange();
 }
@@ -42,7 +45,9 @@ $('.popup-bg').on('click', (e) => {
 
 // Manual Mode
 // Toggle Manual Mode
-var manualMode = false;
+export var manualMode = false;
+
+window.toggleManualMode = toggleManualMode; // global
 function toggleManualMode() {
     const mmCont = document.getElementById('manual-mode');
     const mmInputs = mmCont.querySelector('.inputs-cont');
@@ -64,8 +69,6 @@ function toggleManualMode() {
     }
     renderValues();
 }
-
-const manualInput = document.getElementById('range-linear-motor');
 
 // Disk speed
 // Manual range
@@ -93,12 +96,14 @@ const diskCodeForm = document.getElementById('disk-code-form');
 const diskCodeInput = document.getElementById('disk-code-input');
 const diskCodeValue = document.getElementById('disk-code-value');
 
+window.setDiskCode = setDiskCode; // global
 function setDiskCode(e) {
     e.preventDefault();
 
     diskCodeForm.setAttribute('err-msg', '');
 
     const dc = diskCodeInput.value;
+    let optPath = [];
 
     // Get disk path from DB
     $.ajax({
@@ -119,11 +124,10 @@ function setDiskCode(e) {
             if (dc != '') {
                 diskCodeForm.setAttribute('err-msg', 'Disk code does not exist');
             }
-            optPath = [];
             diskCodeValue.innerText = '-';
         },
         complete: function() {
-            diskDiagram.setOptPath(optPath, optPathWidth);
+            diskDiagram.setOptPath(optPath);
         }
     });
 }
@@ -134,6 +138,7 @@ const loginForm = document.getElementById('login-form');
 const username = document.getElementById('username');
 const password = document.getElementById('password');
 
+window.openLoginForm = openLoginForm; // global
 function openLoginForm() {
     loginForm.parentElement.classList.remove('hidden');
     loginForm.querySelector('input').focus();
@@ -144,12 +149,11 @@ function removeLoginRequired() {
     $('.login-required-reveal').removeClass('disabled');
 }
 
+window.login = login; // global
 function login(e) {
     e.preventDefault();
 
     loginForm.setAttribute('err-msg', '');
-
-    const loginData = new FormData(loginForm);
 
     $.ajax({
         method: 'POST',
@@ -186,6 +190,7 @@ const uploadRunForm = document.getElementById('upload-run-form');
 const sessionIdInput = document.getElementById('session-id-input');
 const uploadResultBtn = document.getElementById('upload-result');
 
+window.uploadRun = uploadRun; // global
 function uploadRun(e) {
     e.preventDefault();
 
@@ -225,12 +230,14 @@ function uploadRun(e) {
 const informationPage = document.getElementById('information-page');
 const leaderboardPage = document.getElementById('leaderboard-page');
 
+window.openLeaderboard = openLeaderboard; // global
 function openLeaderboard() {
     leaderboardPage.classList.remove('hidden');
     informationPage.classList.add('hidden');
     getLeaderboard();
 }
 
+window.closeLeaderboard = closeLeaderboard; // global
 function closeLeaderboard() {
     leaderboardPage.classList.add('hidden');
     informationPage.classList.remove('hidden');
@@ -248,6 +255,7 @@ const lbSessionIdInput = document.getElementById('lb-session-id-input');
 const lbDiskCodeInput = document.getElementById('lb-disk-code-input');
 const lbTable = document.getElementById('leaderboard-table');
 
+window.getLeaderboard = getLeaderboard; // global
 function getLeaderboard(e=new Event('')) {
     e.preventDefault();
 
@@ -301,6 +309,7 @@ function getLeaderboard(e=new Event('')) {
 
 // Arduino
 // Upload Parameters
+window.uploadParams = uploadParams; // global
 function uploadParams() {
     // Linear Values
     const lkpid = document.getElementById('l-kpid').value;

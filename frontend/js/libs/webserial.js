@@ -111,3 +111,5 @@ class LineBreakTransformer {
         controller.enqueue(this.chunks);
     }
 }
+
+export default SerialController;

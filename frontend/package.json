@@ -1,8 +1,15 @@
 {
   "scripts": {
-    "watch_sass": "sass --watch ./scss/style.scss ./style.css --style compressed"
+    "watch_sass": "sass --watch ./scss/style.scss ./style.css --style compressed",
+    "build_js": "npx webpack",
+    "build_css": "sass ./scss/style.scss ./style.css --style compressed",
+    "build": "npm run build_js && npm run build_css"
   },
   "devDependencies": {
-    "sass": "^1.81.0"
+    "sass": "^1.81.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "jquery": "^3.7.1"
   }
 }

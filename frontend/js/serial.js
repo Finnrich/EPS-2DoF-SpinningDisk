@@ -1,3 +1,5 @@
+import SerialController from "./libs/webserial";
+
 const dbEl = document.getElementById('debug');
 const mCEl = document.getElementById('msgCount');
 let msgCount = 0;

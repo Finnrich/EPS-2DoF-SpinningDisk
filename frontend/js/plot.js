@@ -1,19 +1,17 @@
+import DiskDiagram from "./diagrams/DiskDiagram";
+import LinearDiagram from "./diagrams/LinearDiagram";
 
-const clrYourPath = getComputedStyle(document.body).getPropertyValue('--clr-yourPath');
-const clrOptPath = getComputedStyle(document.body).getPropertyValue('--clr-optPath');
-const dpr = window.devicePixelRatio || 1;
-const sendDataInterval = 20;
+import { manualMode } from "./main";
+import { clrYourPath, clrOptPath, sendDataInterval } from "./values";
 
 // --- DISK DIAGRAM CENTER --- //
 
 const diskC = document.querySelector("#disk-diagram-cont > canvas");
-const diskDiagram = new DiskDiagram(diskC, 500, 100);
-
-var optPath;
-const optPathWidth = 5;
+export const diskDiagram = new DiskDiagram(diskC, 500, 100);
 
 const evalEl = document.getElementById('points-num');
 const evalProgbarFillEl = document.getElementById('eval-progbar-fill');
+const manualInput = document.getElementById('range-linear-motor');
 
 // feedDataPoint();
 // function feedDataPoint() {
@@ -32,7 +30,7 @@ setInterval(() => {
         if (intervalCount%5==0) {
             const evaluation = diskDiagram.getEvaluationAvg();
             evalEl.innerText = evaluation;
-            evalProgbarFillEl.style.width = evaluation + '%';
+            evalProgbarFillEl.style.setProperty('--eval', evaluation + '%');
         }
         intervalCount++;
     }
@@ -50,8 +48,8 @@ const linPosToOptC = document.getElementById("lin-pos-to-opt");
 const sensorPoints = 100;
 const sensorMaxValue = 100;
 
-linPosDiagram = new LinearDiagram(linPosC, clrYourPath);
+const linPosDiagram = new LinearDiagram(linPosC, clrYourPath);
 linPosDiagram.setValueDisplayEl(linearPosValue);
-vertDistDiagram = new LinearDiagram(vertDistC, clrOptPath, -100, 100);
+const vertDistDiagram = new LinearDiagram(vertDistC, clrOptPath, -100, 100);
 vertDistDiagram.setValueDisplayEl(vertDistValue);
-linPosToOptDiagram = new LinearDiagram(linPosToOptC);
+const linPosToOptDiagram = new LinearDiagram(linPosToOptC);

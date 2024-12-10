@@ -1,25 +1,7 @@
-class Diagram {
-    constructor(canvas, alpha=true) {
-        this.canvas = canvas;
-        this.ctx = this.canvas.getContext("2d", { alpha: alpha });
-        this.setCanvasSize();
-    }
+import Diagram from "./Diagram";
+import DiskDataPoint from "./DiskDataPoint";
 
-    setCanvasSize() {
-        const w = this.canvas.offsetWidth * dpr + "px";
-        const h = this.canvas.offsetHeight * dpr + "px";
-        this.canvas.setAttribute("width", w);
-        this.canvas.setAttribute("height", h);
-    }
-}
-
-class DiskDataPoint {
-    constructor(value, progress, vector) {
-        this.val = value;
-        this.prog = progress;
-        this.pos = {x: vector[0], y: vector[1]};
-    }
-}
+import { clrYourPath, clrOptPath } from "../values";
 
 class DiskDiagram extends Diagram {
 
@@ -98,26 +80,9 @@ class DiskDiagram extends Diagram {
     }
 
     // used to define the optimal path
-    // optPathWidth can be empty array, array of the same length as optPathData or a number
-    //   empty array means everywhere 1 pixel width
-    //   single number means everywhere n pixels width
-    //   array defines width at every datapoint of optPathData seperately
-    setOptPath(optPath, optPathWidth = []) {
+    setOptPath(optPath, optPathWidth = 10) {
         this.optPathData = optPath;
-        this.optPathWidth = [];
-        if (typeof optPathWidth === "object") {
-            if (optPathWidth.length == optPath.length) { // filled array
-                this.optPathWidth = optPathWidth;
-            } else if (optPathWidth == []) { // empty array
-                for(let i=0; i<optPath.length; i++) {
-                    this.optPathWidth.push(1);
-                }
-            }
-        } else if (typeof optPathWidth === "number") { // number
-            for(let i=0; i<optPath.length; i++) {
-                this.optPathWidth.push(optPathWidth);
-            }
-        }
+        this.optPathWidth = optPathWidth;
         this.generateOptPathImg();
         this.drawOptPathImg();
     }
@@ -125,22 +90,14 @@ class DiskDiagram extends Diagram {
     generateOptPathImg() {
         const offscreenOptPath = new OffscreenCanvas(this.canvas.width, this.canvas.height);
         const oopCtx = offscreenOptPath.getContext("2d");
-        // oopCtx.beginPath();
-        const startPoint = this.v2Circle(this.optPathData[0], 0);
-        // oopCtx.beginPath();
-        
-        // oopCtx.moveTo(startPoint[0], startPoint[1]);
+
         for(let i=1; i<this.optPathData.length; i++) {
-            // const prevPoint = this.v2Circle(this.optPathData[i-1], (i-1)/this.optPathData.length);
-            // oopCtx.moveTo(prevPoint[0], prevPoint[1]);
             const point = this.v2Circle(this.optPathData[i], i/this.optPathData.length);
-            // oopCtx.strokeStyle = clrOptPath;
-            // oopCtx.lineWidth = this.optPathWidth[i];
             oopCtx.lineTo(point[0], point[1]);
-            // oopCtx.stroke();
         }
+
         oopCtx.strokeStyle = clrOptPath;
-        oopCtx.lineWidth = 10;
+        oopCtx.lineWidth = this.optPathWidth;
         oopCtx.closePath();
         oopCtx.stroke();
 
@@ -277,76 +234,4 @@ class DiskDiagram extends Diagram {
     }
 }
 
-class LinearDiagram extends Diagram {
-    static allLinearDiagrams = [];
-
-    constructor(canvas, color, minValue=0, maxValue=100, pointsCount=100) {
-        super(canvas, false);
-        this.generateBG();
-        LinearDiagram.allLinearDiagrams.push(this);
-        this.pointsCount = pointsCount;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
-        this.valueRange = maxValue-minValue;
-        this.points = [];
-        this.color = color;
-    }
-
-    // generate diagram background in offscreen canvas
-    generateBG() {
-        const w = this.canvas.width;
-        const h = this.canvas.height;
-        const sensorBG = new OffscreenCanvas(w, h);
-        const sensorBGCtx = sensorBG.getContext("2d", { alpha: false });
-        sensorBGCtx.rect(0, 0, w, h);
-        sensorBGCtx.fillStyle = clrBG;
-        sensorBGCtx.fill();
-        sensorBGCtx.moveTo(0, h/2);
-        sensorBGCtx.lineTo(w, h/2);
-        sensorBGCtx.strokeStyle = clrButton;
-        sensorBGCtx.lineWidth = 1;
-        sensorBGCtx.stroke();
-        this.bg = sensorBG;
-        this.drawBG();
-    }
-
-    drawBG() {
-        this.ctx.drawImage(this.bg, 0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    render() {
-        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
-        this.drawBG();
-        this.ctx.beginPath();
-        for(let i=0; i<this.points.length; i++) {
-            const x = this.canvas.width-(i/this.pointsCount)*this.canvas.width; // draw from the right
-            const y = -2+this.canvas.height-((this.points[this.points.length-i-1]-this.minValue)/this.valueRange)*(this.canvas.height-4);
-            this.ctx.lineTo(x, y); // draw last point first
-        }
-        this.ctx.strokeStyle = this.color;
-        this.ctx.lineWidth = 2;
-        this.ctx.stroke();
-        
-        if (this.valDisplayEl) {
-            this.valDisplayEl.innerText = this.points[this.points.length-1];
-        }
-    }
-
-    addPoint(v) {
-        this.points.push(v);
-        while (this.points.length > this.pointsCount+1) {
-            this.points.shift();
-        }
-    }
-
-    setValueDisplayEl(el) {
-        this.valDisplayEl = el;
-    }
-
-    static ldModeChange() {
-        this.allLinearDiagrams.forEach(ld => {
-            ld.generateBG();
-            ld.render();
-        });
-    }
-}
+export default DiskDiagram;

@@ -299,15 +299,16 @@ canvas#lin-pos-to-opt {
 }
 
 #eval-progbar {
+    --eval: 0%;
     height: 10px;
     background-color: light-dark(var(--lmButton), var(--dmButton));
 
     & > #eval-progbar-fill {
         height: 100%;
-        width: 0;
+        width: var(--eval);
         max-width: 100%;
-        background-color: green;
-        transition: width 200ms ease-out;
+        background-color: color-mix( in hsl decreasing hue, #1eb10a var(--eval), #CA0000 );
+        transition: width 200ms ease-out, background-color 200ms ease-out;
     }
 }
 

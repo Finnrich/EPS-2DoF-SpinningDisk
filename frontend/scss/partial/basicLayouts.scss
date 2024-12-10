@@ -30,7 +30,8 @@ nav {
 // creates sidebars
 #bg {
     background-color: light-dark(var(--lmBG), var(--dmBG));
-    height: 100%;
+    height: fit-content;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -52,6 +53,7 @@ nav {
     flex-direction: column;
     width: 250px;
     justify-content: space-between;
+    gap: 16px;
 
     // center section
     &:nth-child(2) {
@@ -188,17 +190,17 @@ input[type=range] {
 form {
     position: relative;
     margin-bottom: 14px;
-}
 
-form::after {
-    position: absolute;
-    display: block;
-    content: attr(err-msg);
-    top: calc(100% + 2px);
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 9px;
-    color: #df2828;
+    &::after {
+        position: absolute;
+        display: block;
+        content: attr(err-msg);
+        top: calc(100% + 2px);
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 9px;
+        color: #df2828;
+    }
 }
 
 .inputs-cont {
@@ -311,40 +313,40 @@ footer {
 
 .popup {
     z-index: 10;
-}
 
-.popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: light-dark(var(--lmBox), var(--dmBox));
-    border-radius: 8px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 256px;
-}
+    .popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: light-dark(var(--lmBox), var(--dmBox));
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 256px;
+    }
 
-.popup-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: "";
-    display: block;
-    background-color: #000;
-    opacity: 33%;
+    .popup-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: "";
+        display: block;
+        background-color: #000;
+        opacity: 33%;
+    }
 }
 
 input.mono {
     font-family: monospace;
     font-size: 14px;
-}
 
-input.mono::placeholder {
-    font-family: 'Inter';
-    font-size: 12px;
+    &::placeholder {
+        font-family: 'Inter';
+        font-size: 12px;
+    }
 }

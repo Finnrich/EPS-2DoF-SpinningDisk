@@ -1,5 +1,16 @@
 <?php
 
+/*
+
+Endpoint for logging in
+
+    POST   - Login
+    Parameters (Form):
+        - username     STR
+        - password     STR
+
+*/
+
 include 'load_wp.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -2,6 +2,7 @@ DROP TRIGGER IF EXISTS `2dof_check_run`;
 DROP TRIGGER IF EXISTS `2dof_check_session`;
 DROP TRIGGER IF EXISTS `2dof_check_disk`;
 
+-- Check run values before insert
 DELIMITER $$
 CREATE TRIGGER `2dof_check_run`
 BEFORE INSERT ON `2dof_runs`
@@ -15,6 +16,7 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- Check session values before insert
 DELIMITER $$
 CREATE TRIGGER `2dof_check_session`
 BEFORE INSERT ON `2dof_sessions`
@@ -31,6 +33,7 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- Check disk values before insert
 DELIMITER $$
 CREATE TRIGGER `2dof_check_disk`
 BEFORE INSERT ON `2dof_disks`

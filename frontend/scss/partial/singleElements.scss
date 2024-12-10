@@ -63,6 +63,7 @@
     }
 }
 
+// start button and connect button
 #controlling {
     display: flex;
     flex-direction: row;
@@ -157,6 +158,7 @@ canvas#lin-pos-to-opt {
     width: 80%;
 }
 
+// Red notification on top of the page
 #debug {
     background-color: #f00;
     height: 32px;

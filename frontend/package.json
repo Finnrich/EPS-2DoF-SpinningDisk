@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "watch_js": "npx webpack --watch",
     "watch_sass": "sass --watch ./scss/style.scss ./style.css --style compressed",
     "build_js": "npx webpack",
     "build_css": "sass ./scss/style.scss ./style.css --style compressed",

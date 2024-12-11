@@ -2,8 +2,8 @@
     <div class="dof-created-session">
         <p>Created session:</p>
     </div>
+    <p>Your sessions:</p>
     <div class="dof-all-sessions">
-        <p>Your sessions:</p>
     </div>
 </div>
 
@@ -41,6 +41,7 @@
             type: 'POST',
             url: sessions_url,
             success: function(resultData) {
+                $('.dof-all-sessions').prepend($('.dof-created-session > .dof-session'));
                 $('.dof-created-session > .dof-session').remove();
                 const sEl = $('<div></div>')
                     .addClass('dof-session')

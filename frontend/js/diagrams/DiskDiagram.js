@@ -180,6 +180,10 @@ class DiskDiagram extends Diagram {
         return optValue - curValue;
     }
 
+    getCurOptValue() {
+        return this.getOptValueAtProgress(this.progress);
+    }
+
     getEvaluationAvg() {
         let sum = 0;
         let skipped = 0;

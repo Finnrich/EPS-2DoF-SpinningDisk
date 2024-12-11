@@ -13,12 +13,6 @@ const evalEl = document.getElementById('points-num');
 const evalProgbarFillEl = document.getElementById('eval-progbar-fill');
 const manualInput = document.getElementById('range-linear-motor');
 
-// feedDataPoint();
-// function feedDataPoint() {
-//     // for (let i=0; i<pointsPerRev; i++) {
-//     //     diskDrawNextPoint(testDataPoints[i]);
-//     // }
-// }
 let intervalCount = 0;
 setInterval(() => {
     if (manualMode) {
@@ -27,6 +21,8 @@ setInterval(() => {
         linPosDiagram.render();
         vertDistDiagram.addPoint(diskDiagram.getCurOffset());
         vertDistDiagram.render();
+        linPosToOptDiagram.addPoint([diskDiagram.getCurOptValue(), manualInput.value]);
+        linPosToOptDiagram.render();
         if (intervalCount%5==0) {
             const evaluation = diskDiagram.getEvaluationAvg();
             evalEl.innerText = evaluation;
@@ -48,8 +44,10 @@ const linPosToOptC = document.getElementById("lin-pos-to-opt");
 const sensorPoints = 100;
 const sensorMaxValue = 100;
 
-const linPosDiagram = new LinearDiagram(linPosC, clrYourPath);
-linPosDiagram.setValueDisplayEl(linearPosValue);
-const vertDistDiagram = new LinearDiagram(vertDistC, clrOptPath, -100, 100);
-vertDistDiagram.setValueDisplayEl(vertDistValue);
+const linPosDiagram = new LinearDiagram(linPosC);
+linPosDiagram.addDiagramValue(clrYourPath, linearPosValue);
+const vertDistDiagram = new LinearDiagram(vertDistC);
+vertDistDiagram.addDiagramValue(clrOptPath, vertDistValue, -100, 100);
 const linPosToOptDiagram = new LinearDiagram(linPosToOptC);
+linPosToOptDiagram.addDiagramValue(clrOptPath);
+linPosToOptDiagram.addDiagramValue(clrYourPath);

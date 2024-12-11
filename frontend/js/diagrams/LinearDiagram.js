@@ -5,16 +5,23 @@ import { clrBG, clrButton } from "../values";
 class LinearDiagram extends Diagram {
     static allLinearDiagrams = [];
 
-    constructor(canvas, color, minValue=0, maxValue=100, pointsCount=100) {
+    constructor(canvas) {
         super(canvas, false);
         this.generateBG();
         LinearDiagram.allLinearDiagrams.push(this);
-        this.pointsCount = pointsCount;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
-        this.valueRange = maxValue-minValue;
-        this.points = [];
-        this.color = color;
+        this.diagrams = [];
+    }
+
+    addDiagramValue(color, valDisplayEl, minValue=0, maxValue=100, pointsCount=100) {
+        this.diagrams.push({
+            color: color,
+            minValue: minValue,
+            maxValue: maxValue,
+            valueRange: maxValue - minValue,
+            pointsCount: pointsCount,
+            points: [],
+            valDisplayEl: valDisplayEl
+        });
     }
 
     // generate diagram background in offscreen canvas
@@ -42,30 +49,39 @@ class LinearDiagram extends Diagram {
     render() {
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
         this.drawBG();
-        this.ctx.beginPath();
-        for(let i=0; i<this.points.length; i++) {
-            const x = this.canvas.width-(i/this.pointsCount)*this.canvas.width; // draw from the right
-            const y = -2+this.canvas.height-((this.points[this.points.length-i-1]-this.minValue)/this.valueRange)*(this.canvas.height-4);
-            this.ctx.lineTo(x, y); // draw last point first
-        }
-        this.ctx.strokeStyle = this.color;
-        this.ctx.lineWidth = 2;
-        this.ctx.stroke();
-        
-        if (this.valDisplayEl) {
-            this.valDisplayEl.innerText = this.points[this.points.length-1];
-        }
-    }
-
-    addPoint(v) {
-        this.points.push(v);
-        while (this.points.length > this.pointsCount+1) {
-            this.points.shift();
+        for (let i=0; i<this.diagrams.length; i++) {
+            const diagram = this.diagrams[i];
+            this.ctx.beginPath();
+            for(let i=0; i<diagram.points.length; i++) {
+                const x = this.canvas.width-(i/diagram.pointsCount)*this.canvas.width; // draw from the right
+                const y = -2+this.canvas.height-((diagram.points[diagram.points.length-i-1]-diagram.minValue)/diagram.valueRange)*(this.canvas.height-4);
+                this.ctx.lineTo(x, y); // draw last point first
+            }
+            this.ctx.strokeStyle = diagram.color;
+            this.ctx.lineWidth = 2;
+            this.ctx.stroke();
+            
+            if (diagram.valDisplayEl) {
+                diagram.valDisplayEl.innerText = diagram.points[diagram.points.length-1];
+            }
         }
     }
 
-    setValueDisplayEl(el) {
-        this.valDisplayEl = el;
+    addPoint(vArr) {
+        if (typeof vArr !== 'object') {
+            // not an array
+            vArr = [vArr];
+        }
+        if (vArr.length != this.diagrams.length) {
+            return;
+        }
+        for (let i=0; i<this.diagrams.length; i++) {
+            const diagram = this.diagrams[i];
+            diagram.points.push(vArr[i]);
+            while (diagram.points.length > diagram.pointsCount+1) {
+                diagram.points.shift();
+            }
+        }
     }
 
     static ldModeChange() {

@@ -5,8 +5,6 @@ import { clrYourPath, clrOptPath } from "../values";
 
 class DiskDiagram extends Diagram {
 
-    static evalGroupsCount = 100; // Evaluation groups values, so that the average is still representative if the point density changes
-
     constructor(canvas, pointsPerRev=100, maxValue=100) {
         super(canvas);
         this.pointsPerRev = pointsPerRev;
@@ -119,6 +117,7 @@ class DiskDiagram extends Diagram {
     }
 
     evaluateValue(v, prog) {
+        v = Math.round(v);
         const pathValue = this.getPathValueAtProgress(prog);
         if (pathValue === false) {
             return false;
@@ -180,30 +179,6 @@ class DiskDiagram extends Diagram {
         const optValue = this.getOptValueAtProgress(this.progress);
         return optValue - curValue;
     }
-
-    // getEvaluationAvg() {
-    //     const startProg = this.dataPoints[0].prog;
-    //     let sum = 0;
-    //     let idx = 0;
-    //     let skipped = 0;
-    //     for (let i=0; i<DiskDiagram.evalGroupsCount; i++) {
-    //         if (this.dataPoints[idx]) {
-    //             const subStartProg = startProg+1/DiskDiagram.evalGroupsCount*i;
-    //             let subsum = 0;
-    //             let j = 0;
-    //             while (this.dataPoints[idx+j] && this.isWithinEvalGroup(subStartProg, this.dataPoints[idx+j].prog)) {
-    //                 subsum += this.evaluateValue(this.dataPoints[idx+j].val, this.dataPoints[idx+j].prog);
-    //                 j++;
-    //             }
-    //             idx += j;
-    //             if (j != 0) {
-    //                 sum += subsum/j;
-    //             }
-    //         }
-    //     }
-    //     sum = sum/this.optPathData.length*100;
-    //     return Math.round(sum*100)/100; // average rounded to max two decimals
-    // }
 
     getEvaluationAvg() {
         let sum = 0;

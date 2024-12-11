@@ -249,7 +249,7 @@ button.disabled {
     gap: 8px;
 }
 
-button.icon-btn, a.icon-btn {
+button.icon-btn, a.icon-btn, .icon-btn {
     width: 32px;
     height: 32px;
     padding: 7px;
@@ -272,6 +272,9 @@ footer {
     background-color: light-dark(var(--lmBG), var(--dmBG));
     padding: 24px;
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     &::before {
         position: absolute;
@@ -283,6 +286,15 @@ footer {
         height: 4px;
         width: 100%;
         background-color: light-dark(var(--lmBox), var(--dmBox));
+    }
+
+    .icon-btn {
+        padding: 5px;
+
+        svg {
+            width: 22px;
+            height: 22px;
+        }
     }
 }
 

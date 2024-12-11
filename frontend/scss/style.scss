@@ -21,3 +21,7 @@ body {
 .hidden {
     display: none !important;
 }
+
+a {
+    color: light-dark(var(--lmFont), var(--dmFont));
+}

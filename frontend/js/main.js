@@ -104,6 +104,7 @@ function setDiskCode(e) {
 
     const dc = diskCodeInput.value;
     let optPath = [];
+    let optPathWidth;
 
     // Get disk path from DB
     $.ajax({
@@ -114,6 +115,7 @@ function setDiskCode(e) {
         },
         success: function(resultData) {
             optPath = resultData.path;
+            optPathWidth = resultData.width;
             diskCodeValue.innerText = dc;
             if (lbDiskCodeInput.value === '') {
                 // set disk code input on leaderboard page
@@ -127,7 +129,7 @@ function setDiskCode(e) {
             diskCodeValue.innerText = '-';
         },
         complete: function() {
-            diskDiagram.setOptPath(optPath);
+            diskDiagram.setOptPath(optPath, optPathWidth);
         }
     });
 }

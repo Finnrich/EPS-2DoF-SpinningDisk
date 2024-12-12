@@ -116,13 +116,13 @@ class DiskDiagram extends Diagram {
         this.pointsPerRev = ppr;
     }
 
-    evaluateValue(v, prog) {
-        v = Math.round(v);
+    evaluateValue(prog) {
         const pathValue = this.getPathValueAtProgress(prog);
+        const optValue = Math.round(this.getOptValueAtProgress(prog));
         if (pathValue === false) {
             return false;
         }
-        const dist = Math.abs(v-pathValue); // distance of opt value to nearest path value
+        const dist = Math.abs(optValue-pathValue); // distance of opt value to nearest path value
         const e = dist == 0 ? 1 : 1/Math.pow(dist, 2); // 1/x^2
         return e > 0.01 ? e : 0; // if under 1% return 0%
     }
@@ -162,19 +162,33 @@ class DiskDiagram extends Diagram {
     }
 
     getOptValueAtProgress(progress) {
+        // get nearest optimal value at progress
         const idxNearest = Math.floor(this.optPathData.length * progress);
         const valNearest = this.optPathData[idxNearest];
+
+        // find second nearest optimal value
         const progNearest = idxNearest/this.optPathData.length;
-        const dir = progNearest > progress ? -1 : 1;
+        const dir = progNearest > progress ? -1 : 1; // direction of second nearest from first
         const idxSecNearest = idxNearest + dir;
+
+        // wrap around on overflow
+        if (idxSecNearest >= this.optPathData.length) {
+            idxSecNearest = 0;
+        } else if (idxNearest < 0) {
+            idxSecNearest = this.optPathData.length - 1;
+        }
+
         const valSecNearest = this.optPathData[idxSecNearest];
         const progSecNearest = idxSecNearest/this.optPathData.length;
+
+        // interpolate between nearest and second nearest
         const progBtwNearests = (progress-progSecNearest)/(progNearest-progSecNearest);
         const interpValue = valNearest*progBtwNearests + valSecNearest*(1-progBtwNearests);
         return Math.round(interpValue);
     }
 
     getCurOffset() {
+        // get distance from current path value to the optimal value
         const curValue = this.dataPoints[this.dataPoints.length-1].val;
         const optValue = this.getOptValueAtProgress(this.progress);
         return optValue - curValue;
@@ -187,9 +201,12 @@ class DiskDiagram extends Diagram {
     getEvaluationAvg() {
         let sum = 0;
         let skipped = 0;
+        const evalPoints = 100;
         if (this.dataPoints.length != 0) {
-            for (let i=0; i<this.optPathData.length; i++) {
-                const evalVal = this.evaluateValue(this.optPathData[i], i/this.optPathData.length);
+            // add evaluations on every point of optPathData
+            for (let i=0; i<evalPoints; i++) {
+                const prog = i/evalPoints;
+                const evalVal = this.evaluateValue(prog);
                 if (evalVal !== false) {
                     sum += evalVal;
                 } else if (this.minOneRep) {
@@ -197,7 +214,7 @@ class DiskDiagram extends Diagram {
                 }
             }
         }
-        sum = sum/(this.optPathData.length-skipped)*100;
+        sum = sum/(evalPoints-skipped)*100;
         return Math.round(sum*100)/100; // average rounded to max two decimals
     }
 

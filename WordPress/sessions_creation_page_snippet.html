@@ -8,6 +8,7 @@
 </div>
 
 <script>
+    
     const sessions_url = "../2dof/api/v1/sessions";
     
     function dof_get_sessions() {
@@ -89,4 +90,32 @@
     dof_get_sessions();
     $('.dof-create-session').on('click', dof_create_session);
     $('.dof-delete-old-sessions').on('click', dof_delete_old_sessions);
-    </script>
+
+</script>
+
+<style>
+
+    .dof-session {
+        display: flex;
+        border-top: 1px solid #bbb;
+    }
+    .dof-session-id {
+        font-family: monospace;
+    }
+    .dof-created-session:not(:has(.dof-session)) {
+        display: none;
+    }
+
+    .dof-session > span {
+        width: 100%;
+    }
+
+    .dof-session-delete {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        text-decoration: underline;
+        align-self: right;
+    }
+
+</style>

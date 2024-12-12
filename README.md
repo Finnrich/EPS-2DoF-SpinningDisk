@@ -1,6 +1,8 @@
 # 2dof Spinning Disk
 _by [Feet](https://feet.upv.es) (Group Sergio in the [EPS](https://europeanprojectsemester.eu) 2024 at [UPV](https://www.upv.es))_
 
+This project is hosted on [feet.upv.es](https://feet.upv.es) (Interface at [feet.upv.es/2dof/](https://feet.upv.es/2dof/)).
+
 The project consists of a frontend and backend. Additionally, it uses WordPress for user management and its SQL database.
 
 ![Sites diagram](./SitesDiagram.png)

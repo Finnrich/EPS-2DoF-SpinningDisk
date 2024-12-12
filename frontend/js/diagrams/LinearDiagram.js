@@ -67,7 +67,7 @@ class LinearDiagram extends Diagram {
             this.ctx.stroke();
             
             if (diagram.valDisplayEl) {
-                diagram.valDisplayEl.innerText = diagram.points[diagram.points.length-1];
+                diagram.valDisplayEl.innerText = diagram.points[diagram.points.length-1] || 0;
             }
         }
     }

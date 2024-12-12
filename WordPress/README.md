@@ -21,4 +21,4 @@ We use the plugins:
 
 If you want to create your own custom WordPress site, the easiest way is to copy our site and remove/rewrite the Feet pages. Or make sure your page meets the requirements mentioned above.
 
-`sessions_creation_page_snippet.html` contains everything necessary for the session creation page. Create a "Custom HTML" block on your WordPress page and paste the content of `sessions_creation_page_snippet.html` into it.
+`sessions_creation_page_snippet.html` contains the code snippet necessary for the session creation page. Create a "Custom HTML" block on your WordPress page and paste the content of `sessions_creation_page_snippet.html` into it. Also create two buttons, one with the class `dof-create-session` and one with the class `dof-delete-old-sessions`.

@@ -2,7 +2,7 @@ import DiskDiagram from "./diagrams/DiskDiagram";
 import LinearDiagram from "./diagrams/LinearDiagram";
 
 import { manualMode } from "./main";
-import { clrYourPath, clrOptPath, sendDataInterval } from "./values";
+import { clrYourPath, clrOptPath, sendDataInterval } from "./variables/values";
 
 // --- DISK DIAGRAM CENTER --- //
 

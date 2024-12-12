@@ -1,4 +1,4 @@
-import { dpr } from "../values";
+import { dpr } from "../variables/values";
 
 class Diagram {
 

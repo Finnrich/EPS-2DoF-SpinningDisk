@@ -1,6 +1,9 @@
 import Diagram from "./Diagram";
 
-import { clrBG, clrButton } from "../values";
+import { clrBG, clrButton } from "../variables/values";
+
+// LinearDiagram displays one or more values as a diagram
+// Values are added with addDiagramValue with its config
 
 class LinearDiagram extends Diagram {
     static allLinearDiagrams = [];
@@ -12,6 +15,8 @@ class LinearDiagram extends Diagram {
         this.diagrams = [];
     }
 
+    // add a new value to the diagram
+    // valDisplayEl is a HTML element that displays the raw value (can be undefined)
     addDiagramValue(color, valDisplayEl, minValue=0, maxValue=100, pointsCount=100) {
         this.diagrams.push({
             color: color,
@@ -67,6 +72,10 @@ class LinearDiagram extends Diagram {
         }
     }
 
+    // add the next value(s)
+    // can be a single number if only one value is displayed in the diagram
+    // otherwise this has to be an array of numbers with the same length as
+    // values added to the diagram in the same order as added
     addPoint(vArr) {
         if (typeof vArr !== 'object') {
             // not an array
@@ -84,6 +93,7 @@ class LinearDiagram extends Diagram {
         }
     }
 
+    // rerenders all LinearDiagrams (for light/dark mode change)
     static ldModeChange() {
         this.allLinearDiagrams.forEach(ld => {
             ld.generateBG();

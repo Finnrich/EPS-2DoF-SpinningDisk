@@ -1,7 +1,7 @@
 import Diagram from "./Diagram";
 import DiskDataPoint from "./DiskDataPoint";
 
-import { clrYourPath, clrOptPath } from "../values";
+import { clrYourPath, clrOptPath } from "../variables/values";
 
 class DiskDiagram extends Diagram {
 
@@ -18,64 +18,9 @@ class DiskDiagram extends Diagram {
         this.progress = 0;
         this.minOneRep = false;
     }
-    
-    drawNextAndAllPoints(v) {
-        v = parseFloat(v);
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.drawOptPathImg();
 
-        if (this.minOneRep) {
-            this.truncateValuesAndPoints();
-        }
-        
-        this.dataPoints.push(new DiskDataPoint(v, this.progress, this.v2Circle(v, this.progress)));
-        this.progress += 1/this.pointsPerRev;
-        if (this.progress >= 1) {
-            this.progress -= 1;
-            this.progessStartIdx = this.dataPoints.length-1;
-            this.minOneRep = true;
-        }
-    
-        this.ctx.beginPath();
-        if (this.dataPoints.length > 1) {
-            for(let i=0; i<this.dataPoints.length; i++) {
-                this.ctx.lineTo(this.dataPoints[i].pos.x, this.dataPoints[i].pos.y);
-            }
-        } else {
-            this.ctx.moveTo(this.dataPoints[0].pos.x, this.dataPoints[0].pos.y);
-        }
-    
-        this.ctx.strokeStyle = clrYourPath;
-        this.ctx.lineWidth = 5;
-        this.ctx.stroke();
-    }
-
-    truncateValuesAndPoints() {
-        let dist = this.progress-this.dataPoints[0].prog;
-        
-        // remove all previous data points that overlap
-        while ((this.dataPoints[0].prog <= this.progress && dist < 0.5) || dist < -0.5 || (dist > -0.01 && dist < 0)) {
-            this.dataPoints.shift();
-            this.progessStartIdx -= this.progessStartIdx == 0 ? 0 : 1;
-            dist = this.progress-this.dataPoints[0].prog;
-        }
-    }
-    
-    // convert single value to point on circle (0 <= progress >= 1)
-    v2Circle(v, progress) {
-        v = v/this.maxValue*(this.canvas.width/2-3);
-        progress *= Math.PI*2;
-        let x = Math.cos(progress);
-        let y = Math.sin(progress);
-        x *= v;
-        y *= v;
-        x += this.canvas.width/2;
-        y += this.canvas.height/2;
-        // x = Math.floor(x); // can be used for optimizing performance (no anti-aliasing needed)
-        // y = Math.floor(y);
-        return [x, y];
-    }
+    // Sets
 
     // used to define the optimal path
     setOptPath(optPath, optPathWidth = 10) {
@@ -85,47 +30,12 @@ class DiskDiagram extends Diagram {
         this.drawOptPathImg();
     }
 
-    generateOptPathImg() {
-        const offscreenOptPath = new OffscreenCanvas(this.canvas.width, this.canvas.height);
-        const oopCtx = offscreenOptPath.getContext("2d");
-
-        for(let i=1; i<this.optPathData.length; i++) {
-            const point = this.v2Circle(this.optPathData[i], i/this.optPathData.length);
-            oopCtx.lineTo(point[0], point[1]);
-        }
-
-        oopCtx.strokeStyle = clrOptPath;
-        oopCtx.lineWidth = this.optPathWidth;
-        oopCtx.closePath();
-        oopCtx.stroke();
-
-        this.optPathImg = offscreenOptPath;
-    }
-
-    drawOptPathImg() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        if (this.optPathImg) {
-            this.ctx.drawImage(
-                this.optPathImg,
-                0, 0, this.canvas.width, this.canvas.height
-            );
-        }
-    }
-
     changeSpeed(ppr) {
         this.pointsPerRev = ppr;
     }
 
-    evaluateValue(prog) {
-        const pathValue = this.getPathValueAtProgress(prog);
-        const optValue = Math.round(this.getOptValueAtProgress(prog));
-        if (pathValue === false) {
-            return false;
-        }
-        const dist = Math.abs(optValue-pathValue); // distance of opt value to nearest path value
-        const e = dist == 0 ? 1 : 1/Math.pow(dist, 2); // 1/x^2
-        return e > 0.01 ? e : 0; // if under 1% return 0%
-    }
+
+    // Gets
 
     getPathValueAtProgress(progress) { // get value of yourPath at progess (interpolated if not exact match at progress)
         let idxNearest = Math.floor(this.dataPoints.length * progress); // guess position of progress value (should be roughly correct if dataPoints is full and equally spaced)
@@ -198,6 +108,71 @@ class DiskDiagram extends Diagram {
         return this.getOptValueAtProgress(this.progress);
     }
 
+
+    // Rendering
+    
+    drawNextAndAllPoints(v) {
+        v = parseFloat(v);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.drawOptPathImg();
+
+        if (this.minOneRep) {
+            this.truncateValuesAndPoints();
+        }
+        
+        this.dataPoints.push(new DiskDataPoint(v, this.progress, this.v2Circle(v, this.progress)));
+        this.progress += 1/this.pointsPerRev;
+        if (this.progress >= 1) {
+            this.progress -= 1;
+            this.progessStartIdx = this.dataPoints.length-1;
+            this.minOneRep = true;
+        }
+    
+        this.ctx.beginPath();
+        if (this.dataPoints.length > 1) {
+            for(let i=0; i<this.dataPoints.length; i++) {
+                this.ctx.lineTo(this.dataPoints[i].pos.x, this.dataPoints[i].pos.y);
+            }
+        } else {
+            this.ctx.moveTo(this.dataPoints[0].pos.x, this.dataPoints[0].pos.y);
+        }
+    
+        this.ctx.strokeStyle = clrYourPath;
+        this.ctx.lineWidth = 5;
+        this.ctx.stroke();
+    }
+
+    generateOptPathImg() {
+        const offscreenOptPath = new OffscreenCanvas(this.canvas.width, this.canvas.height);
+        const oopCtx = offscreenOptPath.getContext("2d");
+
+        for(let i=1; i<this.optPathData.length; i++) {
+            const point = this.v2Circle(this.optPathData[i], i/this.optPathData.length);
+            oopCtx.lineTo(point[0], point[1]);
+        }
+
+        oopCtx.strokeStyle = clrOptPath;
+        oopCtx.lineWidth = this.optPathWidth;
+        oopCtx.closePath();
+        oopCtx.stroke();
+
+        this.optPathImg = offscreenOptPath;
+    }
+
+    drawOptPathImg() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (this.optPathImg) {
+            this.ctx.drawImage(
+                this.optPathImg,
+                0, 0, this.canvas.width, this.canvas.height
+            );
+        }
+    }
+
+
+    // Evaluation
+
     getEvaluationAvg() {
         let sum = 0;
         let skipped = 0;
@@ -218,6 +193,47 @@ class DiskDiagram extends Diagram {
         return Math.round(sum*100)/100; // average rounded to max two decimals
     }
 
+    evaluateValue(prog) {
+        const pathValue = this.getPathValueAtProgress(prog);
+        const optValue = Math.round(this.getOptValueAtProgress(prog));
+        if (pathValue === false) {
+            return false;
+        }
+        const dist = Math.abs(optValue-pathValue); // distance of opt value to nearest path value
+        const e = dist == 0 ? 1 : 1/Math.pow(dist, 2); // 1/x^2
+        return e > 0.01 ? e : 0; // if under 1% return 0%
+    }
+
+
+    // Util
+
+    truncateValuesAndPoints() {
+        let dist = this.progress-this.dataPoints[0].prog;
+        
+        // remove all previous data points that overlap
+        while ((this.dataPoints[0].prog <= this.progress && dist < 0.5) || dist < -0.5 || (dist > -0.01 && dist < 0)) {
+            this.dataPoints.shift();
+            this.progessStartIdx -= this.progessStartIdx == 0 ? 0 : 1;
+            dist = this.progress-this.dataPoints[0].prog;
+        }
+    }
+    
+    // convert single value to point on circle (0 <= progress >= 1)
+    v2Circle(v, progress) {
+        v = v/this.maxValue*(this.canvas.width/2-3);
+        progress *= Math.PI*2;
+        let x = Math.cos(progress);
+        let y = Math.sin(progress);
+        x *= v;
+        y *= v;
+        x += this.canvas.width/2;
+        y += this.canvas.height/2;
+        // x = Math.floor(x); // can be used for optimizing performance (no anti-aliasing needed)
+        // y = Math.floor(y);
+        return [x, y];
+    }
+
+    // Converts yourPath index that assumes the zero point is the first index to the real sequence
     sortedIdx2Real(i) {
         i = this.progessStartIdx + i;
         return i - (Math.floor(i/this.dataPoints.length)*this.dataPoints.length);

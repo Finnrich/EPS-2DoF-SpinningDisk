@@ -1,7 +1,13 @@
 # 2dof Frontend
+The interface for the 2dof spinning disk test bench platform. Establishes a serial connection via USB to the Arduino of the device (not implemented yet).
 
+## Install packages
+Sass, Webpack, jQuery
 ```
 cd frontend
+```
+```
+npm install
 ```
 
 ## Build
@@ -31,4 +37,4 @@ npm run watch_js
 ## Hosting
 The frontend files should be available at: `/2dof/`.  
 
-Only **index.html**, **style.css** and **bundle.js** have to be on the server. Additionally, the **.htaccess** should be uploaded if the server does not already add missing file extensions for **.html** and **.php**.
+Only **index.html**, **style.css** and **bundle.js** need to be on the server. Additionally, the **.htaccess** should be uploaded if the server does not already add missing file extensions for **.html** and **.php**.

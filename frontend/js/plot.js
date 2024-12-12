@@ -13,6 +13,7 @@ const evalEl = document.getElementById('points-num');
 const evalProgbarFillEl = document.getElementById('eval-progbar-fill');
 const manualInput = document.getElementById('range-linear-motor');
 
+// feed values for manual mode
 let intervalCount = 0;
 setInterval(() => {
     if (manualMode) {

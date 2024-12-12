@@ -6,6 +6,7 @@ import { diskDiagram } from "./plot";
 import { reloadColors, LIGHT, DARK, sendDataInterval } from "./variables/values";
 import requests from "./requests";
 import util from "./util";
+
 import {
     loginForm,
     diskSpeedInput, diskSpeedValue,

@@ -18,6 +18,7 @@ We use the plugins:
 - **User Role Editor** for adding custom capabilities to roles
 - **PHP Native Password Hash** for secure password hashing
 - **Carousel Slider Block** for the "Our Values" card carousel on the [Feet page](https://feet.upv.es)
+- **SVG Support** for a .svg logo
 
 If you want to create your own custom WordPress site, the easiest way is to copy our site and remove/rewrite the Feet pages. Or make sure your page meets the requirements mentioned above.
 

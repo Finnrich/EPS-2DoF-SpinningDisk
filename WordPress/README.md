@@ -20,7 +20,8 @@ We use the plugins:
     - **PHP Native Password Hash** for secure password hashing
 - Cosmetic:
     - **Carousel Slider Block** for the "Our Values" card carousel on the [Feet page](https://feet.upv.es)
-    - **SVG Support** for a .svg logo
+    - **SVG Support** for .svg logos
+    - **Easy Pricing Tables: Free** for the pricing tables on the [2dof information page](https://feet.upv.es/2dof-spinningdisk)
 
 If you want to create your own custom WordPress site, the easiest way is to copy our site and remove/rewrite the Feet pages. Or make sure your page meets the requirements mentioned above.
 

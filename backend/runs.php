@@ -81,10 +81,19 @@ switch($_SERVER['REQUEST_METHOD']) {
         $sql = "SELECT COUNT(r.id) AS count
                 FROM `2dof_runs` AS r
                 LEFT JOIN `2dof_sessions` AS s ON r.session_ref = s.id
+                LEFT JOIN `2dof_disks` AS d ON r.disk_ref = d.id
                 WHERE s.session_id = %s"
         ;
 
-        $query = $wpdb->prepare($sql, $_GET['sid']);
+        $sql = $wpdb->prepare($sql, $_GET['sid']);
+
+        if (isset($_GET['did'])) { // also filter by disk code
+            $sql .= " AND d.disk_code = %s";
+            $sql = $wpdb->prepare($sql, $_GET['did']);
+        }
+
+        $query = $sql;
+
         $result = $wpdb->get_results($query, $output=ARRAY_A);
         $run_count = intval($result[0]['count']);
         
@@ -95,7 +104,7 @@ switch($_SERVER['REQUEST_METHOD']) {
             $page = intval($_GET['page']) - 1;
 
             // check if $page is too big
-            $page_count = ceil($run_count / $items_per_page);
+            $page_count = ceil($run_count / $items_per_page) || 1;
             if ($page >= $page_count) {
                 // go to last page
                 $page = $page_count - 1;

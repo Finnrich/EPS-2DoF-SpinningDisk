@@ -174,8 +174,7 @@ export function getLeaderboard(e=new Event('')) {
             // page management
             const pageCount = Math.ceil(resultData.count / resultData.itemsPerPage);
             lbPageCount.innerText = pageCount;
-            lbPageInput.setAttribute('max', pageCount);
-            lbPageInput.value = resultData.page;
+            lbPageInput.value = resultData.page || '';
             lbTable.setAttribute('page', resultData.page);
             lbTable.style.counterReset = 'entries ' + ((resultData.page - 1) * resultData.itemsPerPage);
         },

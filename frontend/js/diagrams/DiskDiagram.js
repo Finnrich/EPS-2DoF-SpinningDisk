@@ -190,7 +190,6 @@ class DiskDiagram extends Diagram {
             }
         }
         sum = sum/(this.evalPoints-skipped)*100;
-        console.log(skipped, this.dataPoints.length);
         return Math.round(sum*100)/100; // average rounded to max two decimals
     }
 

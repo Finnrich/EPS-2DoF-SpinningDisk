@@ -17,6 +17,7 @@ class DiskDiagram extends Diagram {
         this.progessStartIdx = 0; // first index of dataPoints after progress start
         this.progress = 0;
         this.minOneRep = false;
+        this.evalPoints = 100; // count of segments used for evaluation
     }
 
 
@@ -54,7 +55,7 @@ class DiskDiagram extends Diagram {
                 found = true;
             }
         }
-        if (curProgDist > 1/this.optPathData.length) {
+        if (curProgDist > 1/this.evalPoints) {
             return false; // no representative value (too far away)
         }
 
@@ -79,7 +80,7 @@ class DiskDiagram extends Diagram {
         // find second nearest optimal value
         const progNearest = idxNearest/this.optPathData.length;
         const dir = progNearest > progress ? -1 : 1; // direction of second nearest from first
-        const idxSecNearest = idxNearest + dir;
+        let idxSecNearest = idxNearest + dir;
 
         // wrap around on overflow
         if (idxSecNearest >= this.optPathData.length) {
@@ -176,11 +177,10 @@ class DiskDiagram extends Diagram {
     getEvaluationAvg() {
         let sum = 0;
         let skipped = 0;
-        const evalPoints = 100;
         if (this.dataPoints.length != 0) {
             // add evaluations on every point of optPathData
-            for (let i=0; i<evalPoints; i++) {
-                const prog = i/evalPoints;
+            for (let i=0; i<this.evalPoints; i++) {
+                const prog = i/this.evalPoints;
                 const evalVal = this.evaluateValue(prog);
                 if (evalVal !== false) {
                     sum += evalVal;
@@ -189,7 +189,8 @@ class DiskDiagram extends Diagram {
                 }
             }
         }
-        sum = sum/(evalPoints-skipped)*100;
+        sum = sum/(this.evalPoints-skipped)*100;
+        console.log(skipped, this.dataPoints.length);
         return Math.round(sum*100)/100; // average rounded to max two decimals
     }
 

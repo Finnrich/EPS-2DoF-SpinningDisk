@@ -12,6 +12,7 @@ import {
     diskSpeedInput, diskSpeedValue,
     informationPage, leaderboardPage
 } from "./variables/elements";
+import { sendInitialSetPoint } from "./serial";
 
 // ------------------------------- //
 // ------- LIGHT-DARK MODE ------- //
@@ -60,6 +61,7 @@ function toggleManualMode() {
     const mmCont = document.getElementById('manual-mode');
     const mmInputs = mmCont.querySelector('.inputs-cont');
     const mmButton = document.getElementById('activate-manual-mode');
+    const linearInput = document.getElementById('range-linear-motor');
 
     if (mmCont.classList.contains('disabled')) {
         // When algorithm is running
@@ -67,14 +69,49 @@ function toggleManualMode() {
     } else if (mmInputs.classList.contains('disabled')) {
         // Manual mode is currently off
         manualMode = true;
+        physicalMode = false;
         mmInputs.classList.remove('disabled');
         mmButton.innerText = 'Disable Manual Mode';
+        linearInput.setAttribute('min', '0');
+        linearInput.setAttribute('max', '100');
     } else {
         // Manual mode is currently on
         manualMode = false;
         mmInputs.classList.add('disabled');
         mmButton.innerText = 'Activate Manual Mode';
     }
+    renderValues();
+}
+
+// Physical Mode
+// Toggle Physical Mode
+export var physicalMode = false;
+
+window.togglePhysicalMode = togglePhysicalMode; // global
+function togglePhysicalMode() {
+    const mmCont = document.getElementById('manual-mode');
+    const mmInputs = mmCont.querySelector('.inputs-cont');
+    const pmButton = document.getElementById('activate-physical-mode');
+    const linearInput = document.getElementById('range-linear-motor');
+
+    if (mmCont.classList.contains('disabled')) {
+        // When algorithm is running
+        console.error("Physical mode cannot be turned on right now");
+    } else if (mmInputs.classList.contains('disabled')) {
+        // Manual mode is currently off
+        physicalMode = true;
+        manualMode = false;
+        linearInput.setAttribute('min', '2');
+        linearInput.setAttribute('max', '260');
+        mmInputs.classList.remove('disabled');
+        pmButton.innerText = 'Disable Physical Mode';
+    } else {
+        // Manual mode is currently on
+        physicalMode = false;
+        mmInputs.classList.add('disabled');
+        pmButton.innerText = 'Activate Physical Mode';
+    }
+    sendInitialSetPoint(linearInput.value);
     renderValues();
 }
 

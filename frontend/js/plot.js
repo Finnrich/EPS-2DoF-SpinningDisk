@@ -33,6 +33,30 @@ setInterval(() => {
     }
 }, sendDataInterval);
 
+let prevProg = 0;
+export function feedValue(angle, value, setpoint) {
+    // console.log("angle", angle);
+    const prog = (angle % 360) / 360;
+    if (prevProg > prog) {
+        diskDiagram.deletePoints();
+    }
+    prevProg = prog;
+    const v = Math.round((value - 100) / 160 * 100);
+    diskDiagram.feedPoint(prog, v);
+    diskDiagram.drawAll();
+    linPosDiagram.addPoint(v);
+    linPosDiagram.render();
+    vertDistDiagram.addPoint(diskDiagram.getCurOffset());
+    vertDistDiagram.render();
+    linPosToOptDiagram.addPoint([diskDiagram.getCurOptValue(), manualInput.value]);
+    linPosToOptDiagram.render();
+    if (intervalCount%5==0) {
+        const evaluation = diskDiagram.getEvaluationAvg();
+        evalEl.innerText = evaluation;
+        evalProgbarFillEl.style.setProperty('--eval', evaluation + '%');
+    }
+}
+
 // --------------------------- //
 
 // --- LINEAR DIAGRAMS --- //

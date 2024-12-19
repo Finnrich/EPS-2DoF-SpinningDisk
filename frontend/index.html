@@ -56,15 +56,15 @@
                                     <h4>Linear</h4>
                                     <div class="parameter">
                                         <label for="l-kpid">kpid:</label>
-                                        <input type="number" name="l-kpid" id="l-kpid">
+                                        <input type="number" name="l-kpid" id="l-kpid" value="3.5">
                                     </div>
                                     <div class="parameter">
                                         <label for="l-tn">tn:</label>
-                                        <input type="number" name="l-tn" id="l-tn">
+                                        <input type="number" name="l-tn" id="l-tn" value="0.55">
                                     </div>
                                     <div class="parameter">
                                         <label for="l-tv">tv:</label>
-                                        <input type="number" name="l-tv" id="l-tv">
+                                        <input type="number" name="l-tv" id="l-tv" value="0.1">
                                     </div>
                                 </div>
                                 <div id="rotation-param">
@@ -151,10 +151,12 @@
                                 <canvas class="linear-diagram"></canvas>
                             </div>
                         </div>
+                        <!-- <button id="send-physical" onclick="sendPhysical()">send</button> -->
                         <div id="manual-mode" class="box">
                             <div class="buttons-cont">
                                 <button id="activate-manual-mode" onclick="toggleManualMode()">Activate Manual Mode</button>
                             </div>
+                            <button id="activate-physical-mode" onclick="togglePhysicalMode()">Activate Physical Mode</button>
                             <div class="inputs-cont disabled">
                                 <label for="range-linear-motor">Move linear motor</label>
                                 <input type="range" value="50" name="range-linear-motor" id="range-linear-motor">

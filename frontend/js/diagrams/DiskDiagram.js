@@ -111,6 +111,40 @@ class DiskDiagram extends Diagram {
 
 
     // Rendering
+
+    feedPoint(p, v) {
+        // console.log("Progress", p);
+        this.dataPoints.push(new DiskDataPoint(v, p, this.v2Circle(v, p)));
+        this.progress = p;
+    }
+
+    drawAll() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.drawOptPathImg();
+        // console.log(this.progress);
+
+        if (this.minOneRep) {
+            this.truncateValuesAndPoints();
+        }
+    
+        this.ctx.beginPath();
+        if (this.dataPoints.length > 1) {
+            for(let i=0; i<this.dataPoints.length; i++) {
+                this.ctx.lineTo(this.dataPoints[i].pos.x, this.dataPoints[i].pos.y);
+            }
+        } else {
+            this.ctx.moveTo(this.dataPoints[0].pos.x, this.dataPoints[0].pos.y);
+        }
+    
+        this.ctx.strokeStyle = clrYourPath;
+        this.ctx.lineWidth = 5;
+        this.ctx.stroke();
+    }
+
+    deletePoints() {
+        this.dataPoints = [];
+    }
     
     drawNextAndAllPoints(v) {
         v = parseFloat(v);
@@ -126,6 +160,7 @@ class DiskDiagram extends Diagram {
         this.progress += 1/this.pointsPerRev;
         if (this.progress >= 1) {
             this.progress -= 1;
+            this.deletePoints();
             this.progessStartIdx = this.dataPoints.length-1;
             this.minOneRep = true;
         }
@@ -211,7 +246,7 @@ class DiskDiagram extends Diagram {
         let dist = this.progress-this.dataPoints[0].prog;
         
         // remove all previous data points that overlap
-        while ((this.dataPoints[0].prog <= this.progress && dist < 0.5) || dist < -0.5 || (dist > -0.01 && dist < 0)) {
+        while ((this.dataPoints[0].prog <= this.progress && dist < 0.5) || dist < -0.5 || (dist > -0.5 && dist < 0)) {
             this.dataPoints.shift();
             this.progessStartIdx -= this.progessStartIdx == 0 ? 0 : 1;
             dist = this.progress-this.dataPoints[0].prog;
